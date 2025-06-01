@@ -1,0 +1,200 @@
+Ось детальний план реалізації кожної з твоїх ідей у Vite + React + TypeScript проєкті, із порадами по структурі, хукам, збереженню даних і API.
+
+---
+
+## 1. ✅ **Watchlist (обране)**
+
+### Функціональність:
+
+* Додати / видалити монету до "Обраного"
+* Перевірити, чи монета в обраному
+* Зберігати список в `localStorage`
+* Переглядати тільки обрані монети
+
+### Реалізація:
+
+#### 🔸 1. Створити hook `useWatchlist.ts`
+
+```ts
+import { useState, useEffect } from 'react';
+
+const WATCHLIST_KEY = 'crypto_watchlist';
+
+export const useWatchlist = () => {
+  const [watchlist, setWatchlist] = useState<string[]>([]);
+
+  useEffect(() => {
+    const stored = localStorage.getItem(WATCHLIST_KEY);
+    if (stored) setWatchlist(JSON.parse(stored));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(WATCHLIST_KEY, JSON.stringify(watchlist));
+  }, [watchlist]);
+
+  const toggleCoin = (id: string) => {
+    setWatchlist(prev =>
+      prev.includes(id) ? prev.filter(c => c !== id) : [...prev, id]
+    );
+  };
+
+  const isInWatchlist = (id: string) => watchlist.includes(id);
+
+  return { watchlist, toggleCoin, isInWatchlist };
+};
+```
+
+#### 🔸 2. Додати кнопку "★" до кожної монети:
+
+```tsx
+const CoinItem = ({ coin }) => {
+  const { isInWatchlist, toggleCoin } = useWatchlist();
+
+  return (
+    <div>
+      <button onClick={() => toggleCoin(coin.id)}>
+        {isInWatchlist(coin.id) ? '★' : '☆'}
+      </button>
+      <span>{coin.name}</span>
+    </div>
+  );
+};
+```
+
+#### 🔸 3. Створити сторінку `/watchlist`:
+
+Отримати список монет по `ids=bitcoin,ethereum,...` і відобразити, як на головній.
+
+---
+
+## 2. 📰 **Блок новин**
+
+### Варіант 1: CryptoPanic (потрібен API ключ)
+
+### Варіант 2: CoinTelegraph RSS
+
+#### 🔸 Спрощена реалізація (через RSS → `rss2json.com` або власний парсер):
+
+```ts
+const url = 'https://api.rss2json.com/v1/api.json?rss_url=https://cointelegraph.com/rss';
+```
+
+#### 🔸 Компонент `NewsList.tsx`:
+
+```tsx
+import { useEffect, useState } from 'react';
+
+type NewsItem = {
+  title: string;
+  link: string;
+  pubDate: string;
+};
+
+export const NewsList = () => {
+  const [news, setNews] = useState<NewsItem[]>([]);
+
+  useEffect(() => {
+    fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://cointelegraph.com/rss`)
+      .then(res => res.json())
+      .then(data => setNews(data.items.slice(0, 10)));
+  }, []);
+
+  return (
+    <ul>
+      {news.map(item => (
+        <li key={item.link}>
+          <a href={item.link} target="_blank">{item.title}</a>
+          <p>{new Date(item.pubDate).toLocaleDateString()}</p>
+        </li>
+      ))}
+    </ul>
+  );
+};
+```
+
+---
+
+## 3. 🔐 **Авторизація + Профіль + Watchlist per user**
+
+### Варіант 1: Без бекенду (тільки `localStorage`)
+
+→ обмежений, але простий
+
+### Варіант 2: Firebase Auth + Firestore
+
+→ безкоштовно для пет-проєктів, зручно
+
+#### 🔸 Реалізація з Firebase:
+
+* Реєстрація/логін через Email або Google
+* Зберігання `watchlist` у Firestore
+* Sync з `useEffect`
+
+```ts
+import { getAuth, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
+
+const auth = getAuth();
+onAuthStateChanged(auth, user => {
+  // зберегти у state
+});
+```
+
+#### 🔸 Структура Firestore:
+
+```
+users/
+  uid/
+    watchlist: ['bitcoin', 'dogecoin']
+```
+
+#### 🔸 UI:
+
+* Кнопка "Login"
+* Профіль користувача: email, watchlist
+* Можна показати "Історія переглядів" — зберігати останні 5 монет, які користувач відкрив
+
+---
+
+## 4. 📆 **Історія цін за обраний період**
+
+### 🔸 Створити `select` з діапазоном:
+
+```tsx
+const periods = {
+  '1D': 1,
+  '7D': 7,
+  '1M': 30,
+  '3M': 90,
+  '1Y': 365,
+};
+```
+
+### 🔸 Передавати `days` у запит:
+
+```tsx
+useEffect(() => {
+  fetch(`https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${days}`)
+}, [days]);
+```
+
+### 🔸 Приклад `select`:
+
+```tsx
+<select onChange={(e) => setDays(e.target.value)}>
+  {Object.entries(periods).map(([label, value]) => (
+    <option key={value} value={value}>{label}</option>
+  ))}
+</select>
+```
+
+---
+
+## Хочеш ще краще UX?
+
+* **Зберігати останній вибраний період у `localStorage`**
+* **Додати іконки до кнопок (наприклад, "★", "📈", "📰")**
+* **Показати лоадер під час завантаження новин чи графіку**
+
+---
+
+Якщо скажеш, яка з частин найбільш актуальна для тебе зараз — можу одразу накидати готові компоненти, API-запити або інтеграцію з Firebase.

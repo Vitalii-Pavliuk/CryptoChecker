@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import type { CoinChart } from './coinTypes';
+import type { CoinChart } from '../../types/coinTypes';
 
 interface CoinChartState {
   coin: CoinChart | null;

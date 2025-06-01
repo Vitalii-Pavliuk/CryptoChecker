@@ -1,21 +1,11 @@
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { BrowserRouter, Routes, Route, NavLink, Navigate } from 'react-router-dom';
 import { SignupPage } from '../pages/SignupPage';
 import { LoginPage } from '../pages/LoginPage';
-import CryptoList from './CryptoList/CryptoList';
-import CryptoDetails from './CryptoDetails/CryptoDetails';
-import { fetchCoins } from '../redux/coins/coinsSlice';
-import CryptoChart from './CryptoChart/CryptoChart';
+import CryptoList from '../components/CryptoList/CryptoList';
+import CryptoDetails from '../components/CryptoDetails/CryptoDetails';
+import CryptoChart from '../components/CryptoChart/CryptoChart';
 
 export default function App() {
-  const dispatch = useAppDispatch();
-  const { status, error } = useAppSelector((state) => state.coins);
-
-  useEffect(() => {
-    dispatch(fetchCoins());
-  }, [dispatch]);
-
   return (
     <BrowserRouter>
       <nav className="navbar">
@@ -27,9 +17,6 @@ export default function App() {
       </nav>
       
       <div className="content-container">
-        {status === 'loading' && <p className="loading-full">Loading application...</p>}
-        {status === 'failed' && <p className="error-full">Error: {error}</p>}
-        
         <Routes>
           <Route path="/register" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />

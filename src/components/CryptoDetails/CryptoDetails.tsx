@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { fetchCoinDetails } from '../../redux/coins/coinDetailsSlice';
 import { useParams } from 'react-router-dom';
-// import type { CoinDetails } from '../../redux/coins/coinTypes';
 
 const CryptoDetails: React.FC = () => {
   const dispatch = useAppDispatch();

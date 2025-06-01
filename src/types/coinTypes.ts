@@ -30,10 +30,19 @@ export interface CoinDetails {
   };
 }
 
-
 export type CoinChart = {
   prices: [number, number][];
   market_caps: [number, number][];
   total_volumes: [number, number][];
   last_updated: string;
 };
+
+export interface CoinSearchResult {
+  id: string;
+  name: string;
+  api_symbol: string;
+  symbol: string;
+  market_cap_rank: number | null;
+  thumb: string;
+  large: string;
+}
