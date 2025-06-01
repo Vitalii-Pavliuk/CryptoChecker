@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { BrowserRouter, Routes, Route, NavLink, Navigate } from 'react-router-dom';
 import { SignupPage } from '../pages/SignupPage';
@@ -6,6 +6,7 @@ import { LoginPage } from '../pages/LoginPage';
 import CryptoList from './CryptoList/CryptoList';
 import CryptoDetails from './CryptoDetails/CryptoDetails';
 import { fetchCoins } from '../redux/coins/coinsSlice';
+import CryptoChart from './CryptoChart/CryptoChart';
 
 export default function App() {
   const dispatch = useAppDispatch();
@@ -33,7 +34,7 @@ export default function App() {
           <Route path="/register" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/coins" element={<CryptoList />} />
-          <Route path="/coins/:id" element={<CryptoDetails />} />
+          <Route path="/coins/:id" element={<><CryptoDetails /> <CryptoChart /> </>} />
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>

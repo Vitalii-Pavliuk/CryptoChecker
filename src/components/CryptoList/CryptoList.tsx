@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/hooks';
-import type { Coin } from '../../redux/coins/types';
+// import type { Coin } from '../../redux/coins/coinTypes';
 
 const CryptoList: React.FC = () => {
   const { coins, status, error } = useAppSelector((state) => state.coins);

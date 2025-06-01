@@ -29,3 +29,11 @@ export interface CoinDetails {
     homepage: string[];
   };
 }
+
+
+export type CoinChart = {
+  prices: [number, number][];
+  market_caps: [number, number][];
+  total_volumes: [number, number][];
+  last_updated: string;
+};

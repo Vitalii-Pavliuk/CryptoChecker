@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import type { CoinDetails } from './types';
+import type { CoinDetails } from './coinTypes';
 
 interface CoinDetailsState {
   coin: CoinDetails | null;

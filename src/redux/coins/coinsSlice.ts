@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import type { Coin } from './types';
+import type { Coin } from './coinTypes';
 
 const API_URL = 'https://api.coingecko.com/api/v3';
 
