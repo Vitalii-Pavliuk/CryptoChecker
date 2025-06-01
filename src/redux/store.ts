@@ -1,4 +1,3 @@
-
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import type { ThunkDispatch, UnknownAction } from '@reduxjs/toolkit';
 import coinsReducer from "./coins/coinsSlice";
@@ -12,7 +11,6 @@ const rootReducer = combineReducers({
 export const store = configureStore({
   reducer: rootReducer,
 });
-
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = ThunkDispatch<RootState, unknown, UnknownAction>;

@@ -1,18 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import type { Coin } from './types';
 
 const API_URL = 'https://api.coingecko.com/api/v3';
-
-interface Coin {
-  id: string;
-  symbol: string;
-  name: string;
-  image: string;
-  current_price: number;
-  market_cap: number;
-  market_cap_rank: number;
-  price_change_percentage_24h: number;
-}
 
 interface CoinsState {
   coins: Coin[];
@@ -35,9 +25,10 @@ export const fetchCoins = createAsyncThunk<Coin[], void>(
         order: 'market_cap_desc',
         per_page: 50,
         page: 1,
+        sparkline: false,
+        price_change_percentage: '24h'
       },
     });
-    console.log('Fetched coins:', response.data);
     return response.data;
   }
 );
@@ -58,7 +49,7 @@ const coinsSlice = createSlice({
       })
       .addCase(fetchCoins.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.error.message ?? 'Unknown error';
+        state.error = action.error.message ?? 'Failed to fetch coins';
       });
   },
 });
