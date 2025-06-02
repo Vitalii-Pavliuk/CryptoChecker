@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { fetchCoinChart } from '../../redux/coins/coinChartSlice';
-import { useParams } from 'react-router-dom';
+import { data, useParams } from 'react-router-dom';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 const CryptoChart: React.FC = () => {
@@ -9,9 +9,20 @@ const CryptoChart: React.FC = () => {
   const { coin, status, error } = useAppSelector((state) => state.coinChart);
   const { id } = useParams<{ id: string }>();
 
+
+    const periods = {
+  '1D': 1,
+  '7D': 7,
+  '1M': 30,
+  '3M': 90,
+  '1Y': 365,
+};
+
+  const defaultDays = 7;
+
   useEffect(() => {
     if (id) {
-      dispatch(fetchCoinChart(id));
+      dispatch(fetchCoinChart({ id, days: defaultDays }));
     }
   }, [dispatch, id]);
 
@@ -25,6 +36,7 @@ const CryptoChart: React.FC = () => {
   }));
 
   return (
+    <div className="crypto-chart">
     <ResponsiveContainer width="100%" height={300}>
       <LineChart data={chartData}>
         <XAxis dataKey="time" />
@@ -43,6 +55,18 @@ const CryptoChart: React.FC = () => {
         />
       </LineChart>
     </ResponsiveContainer>
+    <div className="chart-controls">
+        {Object.entries(periods).map(([label, days]) => (
+          <button 
+            key={days} 
+            onClick={() => id && dispatch(fetchCoinChart({ id, days }))}
+            className="chart-period-button"
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+    </div>
   );
 };
 

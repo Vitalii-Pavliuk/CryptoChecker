@@ -5,6 +5,7 @@ import SearchBar from '../SearchBar/SearchBar';
 import TopCryptoList from '../TopCryptoList/TopCryptoList';
 import SearchResults from '../SearchResults/SearchResults';
 
+
 const CryptoList: React.FC = () => {
   const dispatch = useAppDispatch();
   const { 
@@ -17,6 +18,7 @@ const CryptoList: React.FC = () => {
     searchQuery,
     page,
   } = useAppSelector((state) => state.coins);
+  
 
   useEffect(() => {
     if (searchQuery === '' && coins.length === 0) {

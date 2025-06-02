@@ -35,6 +35,7 @@ export type CoinChart = {
   market_caps: [number, number][];
   total_volumes: [number, number][];
   last_updated: string;
+  days: number;
 };
 
 export interface CoinSearchResult {
