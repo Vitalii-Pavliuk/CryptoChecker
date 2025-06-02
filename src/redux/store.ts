@@ -3,11 +3,14 @@ import type { ThunkDispatch, UnknownAction } from '@reduxjs/toolkit';
 import coinsReducer from "./coins/coinsSlice";
 import coinDetailsReducer from "./coins/coinDetailsSlice";
 import coinChartReducer from "./coins/coinChartSlice";
+import authReducer from "./User/authSlice";
+
 
 const rootReducer = combineReducers({
   coins: coinsReducer,
   coinDetails: coinDetailsReducer,
   coinChart: coinChartReducer,
+  auth: authReducer,
 });
 
 export const store = configureStore({

@@ -80,11 +80,16 @@ const coinsSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(fetchCoins.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.coins = [...state.coins, ...action.payload];
-        state.page += 1;
-        state.hasMore = action.payload.length === 20;
-      })
+  state.status = 'succeeded';
+
+  const newCoins = action.payload.filter(
+    (coin) => !state.coins.some((existing) => existing.id === coin.id)
+  );
+
+  state.coins = [...state.coins, ...newCoins];
+  state.page += 1;
+  state.hasMore = action.payload.length === 20;
+})
       .addCase(fetchCoins.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload as string;

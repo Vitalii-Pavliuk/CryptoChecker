@@ -48,7 +48,7 @@ const CryptoChart: React.FC = () => {
         <Line 
           type="monotone" 
           dataKey="price" 
-          stroke="#8884d8" 
+          stroke="red" 
           strokeWidth={2} 
           dot={false}
           activeDot={{ r: 6, strokeWidth: 0 }}
