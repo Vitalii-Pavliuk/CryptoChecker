@@ -4,6 +4,7 @@ import LoginPage from '../pages/LoginPage';
 import CryptoList from '../components/CryptoList/CryptoList';
 import CryptoDetails from '../components/CryptoDetails/CryptoDetails';
 import CryptoChart from '../components/CryptoChart/CryptoChart';
+import FavoritesPage from '../pages/FavoritesPage';
 import { useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase/firebase';
@@ -49,12 +50,17 @@ export default function App() {
             Coins
           </NavLink>
           {isAuthenticated && (
-            <div className="user-info">
-              <span>{user?.email}</span>
-              <button onClick={() => auth.signOut()} className="logout-button">
-                Logout
-              </button>
-            </div>
+            <>
+              <NavLink to="/favorites" className="nav-link">
+                Favorites
+              </NavLink>
+              <div className="user-info">
+                <span>{user?.email}</span>
+                <button onClick={() => auth.signOut()} className="logout-button">
+                  Logout
+                </button>
+              </div>
+            </>
           )}
         </div>
       </nav>
@@ -72,6 +78,10 @@ export default function App() {
           <Route
             path="/coins"
             element={isAuthenticated ? <CryptoList /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/favorites"
+            element={isAuthenticated ? <FavoritesPage /> : <Navigate to="/login" />}
           />
           <Route
             path="/coins/:id"

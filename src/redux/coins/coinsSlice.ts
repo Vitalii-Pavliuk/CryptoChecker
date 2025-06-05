@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import type { Coin, CoinSearchResult } from '../../types/coinTypes';
 
 const API_URL = 'https://api.coingecko.com/api/v3';
@@ -31,7 +31,7 @@ export const fetchCoins = createAsyncThunk<Coin[], number>(
   'coins/fetchCoins',
   async (page, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${API_URL}/coins/markets`, {
+      const response = await axios.get<Coin[]>(`${API_URL}/coins/markets`, {
         params: {
           vs_currency: 'usd',
           order: 'market_cap_desc',
@@ -42,8 +42,9 @@ export const fetchCoins = createAsyncThunk<Coin[], number>(
         },
       });
       return response.data;
-    } catch (error: any) {
-      return rejectWithValue(error.message || 'Failed to fetch coins');
+    } catch (error) {
+      const err = error as AxiosError;
+      return rejectWithValue(err.response?.data || err.message || 'Failed to fetch coins');
     }
   }
 );
@@ -52,12 +53,13 @@ export const searchCoins = createAsyncThunk<CoinSearchResult[], string>(
   'coins/searchCoins',
   async (query, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${API_URL}/search`, {
+      const response = await axios.get<{ coins: CoinSearchResult[] }>(`${API_URL}/search`, {
         params: { query }
       });
       return response.data.coins;
-    } catch (error: any) {
-      return rejectWithValue(error.message || 'Failed to search coins');
+    } catch (error) {
+      const err = error as AxiosError;
+      return rejectWithValue(err.response?.data || err.message || 'Failed to search coins');
     }
   }
 );

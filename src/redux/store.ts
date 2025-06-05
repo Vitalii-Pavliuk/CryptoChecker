@@ -4,13 +4,14 @@ import coinsReducer from "./coins/coinsSlice";
 import coinDetailsReducer from "./coins/coinDetailsSlice";
 import coinChartReducer from "./coins/coinChartSlice";
 import authReducer from "./User/authSlice";
-
+import favoritesReducer from "./coins/favoritesSlice";
 
 const rootReducer = combineReducers({
   coins: coinsReducer,
   coinDetails: coinDetailsReducer,
   coinChart: coinChartReducer,
   auth: authReducer,
+  favorites: favoritesReducer,
 });
 
 export const store = configureStore({
