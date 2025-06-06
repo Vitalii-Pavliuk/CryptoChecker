@@ -1,3 +1,20 @@
+// Чи варто зробити один інтерфейс для CoinData та CoinDetails? 
+
+
+export interface CoinData {
+
+  id: string;
+  symbol: string;
+  name: string;
+ market_data: {
+    current_price: { [key: string]: number };
+    price_change_percentage_24h: number;
+ }
+image: {
+  large: string;
+}
+}
+
 export interface Coin {
   id: string;
   symbol: string;

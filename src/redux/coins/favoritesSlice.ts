@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
-import type { Coin } from '../../types/coinTypes';
+import type { CoinData } from '../../types/coinTypes';
 
 const API_URL = 'https://api.coingecko.com/api/v3';
 
 interface FavoritesState {
   favoriteCoins: string[];
-  favoriteCoinsData: Record<string, Coin>;
+  favoriteCoinsData: Record<string, CoinData>;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 }
@@ -29,11 +29,11 @@ const initialState: FavoritesState = {
   error: null,
 };
 
-export const fetchCoinById = createAsyncThunk<Coin, string>(
+export const fetchCoinById = createAsyncThunk<CoinData, string>(
   'favorites/fetchCoinById',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.get<Coin>(`${API_URL}/coins/${id}`);
+      const response = await axios.get<CoinData>(`${API_URL}/coins/${id}`);
       console.log(response.data);
       return response.data;
     } catch (error) {

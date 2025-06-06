@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route, NavLink, Navigate } from 'react-router-dom';
-import RegisterPage from '../pages/RegisterPage';
-import LoginPage from '../pages/LoginPage';
+import {RegisterPage} from '../pages/RegisterPage';
+import {LoginPage} from '../pages/LoginPage';
 import CryptoList from '../components/CryptoList/CryptoList';
 import CryptoDetails from '../components/CryptoDetails/CryptoDetails';
 import CryptoChart from '../components/CryptoChart/CryptoChart';
-import FavoritesPage from '../pages/FavoritesPage';
+import { FavoritesPage } from '../pages/FavoritesPage';
 import { useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase/firebase';
