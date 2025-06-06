@@ -5,7 +5,6 @@ import { auth } from '../firebase/firebase';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../redux/User/authSlice';
 import { useNavigate, Link } from 'react-router-dom';
-// import './AuthPages.css';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
