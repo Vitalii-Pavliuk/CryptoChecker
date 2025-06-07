@@ -1,28 +1,22 @@
-// src/components/SearchBar/SearchBar.tsx
 import React, { useState, useEffect } from 'react';
-import { useAppDispatch } from '../../hooks/hooks';
-import { setSearchQuery, searchCoins, resetSearchResults } from '../../redux/coins/coinsSlice';
 
-const SearchBar: React.FC = () => {
+interface SearchBarProps {
+  onSearchQueryChange: (query: string) => void;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ onSearchQueryChange }) => {
   const [inputValue, setInputValue] = useState('');
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (inputValue.trim() !== '') {
-        dispatch(searchCoins(inputValue));
-      } else {
-        dispatch(resetSearchResults());
-        dispatch(setSearchQuery(''));
-      }
+      onSearchQueryChange(inputValue.trim());
     }, 300);
-    
+
     return () => clearTimeout(timer);
-  }, [inputValue, dispatch]);
+  }, [inputValue, onSearchQueryChange]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
-    dispatch(setSearchQuery(e.target.value));
   };
 
   return (

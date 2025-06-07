@@ -7,7 +7,7 @@ import type { RootState } from '../../redux/store';
 
 interface TopCryptoListProps {
   coins: Coin[];
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  isLoading: boolean;
   error: string | null;
   hasMore: boolean;
   onLoadMore: () => void;
@@ -15,7 +15,7 @@ interface TopCryptoListProps {
 
 const TopCryptoList: React.FC<TopCryptoListProps> = ({
   coins,
-  status,
+  isLoading,
   error,
   hasMore,
   onLoadMore,
@@ -30,8 +30,8 @@ const TopCryptoList: React.FC<TopCryptoListProps> = ({
 
   return (
     <div className="top-crypto-list">
-      {status === 'loading' && coins.length === 0 && <div className="loading">Loading coins...</div>}
-      {status === 'failed' && <div className="error">Error: {error}</div>}
+      {isLoading && coins.length === 0 && <div className="loading">Loading coins...</div>}
+      {error && <div className="error">Error: {error}</div>}
       {coins.length > 0 && (
         <>
           <div className="coins-grid">
@@ -56,10 +56,10 @@ const TopCryptoList: React.FC<TopCryptoListProps> = ({
             <div className="load-more-container">
               <button
                 onClick={onLoadMore}
-                disabled={status === 'loading'}
+                disabled={isLoading}
                 className="load-more-button"
               >
-                {status === 'loading' ? 'Loading...' : 'Load More'}
+                {isLoading ? 'Loading...' : 'Load More'}
               </button>
             </div>
           )}

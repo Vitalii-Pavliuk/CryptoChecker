@@ -4,40 +4,46 @@ import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../hooks/hooks';
 import { toggleFavorite } from '../../redux/coins/favoritesSlice';
 import type { RootState } from '../../redux/store';
-import type { CoinData } from '../../types/coinTypes';
+import { useGetCoinByIdQuery } from '../../redux/services/coinGeckoApi';
 
 interface FavoriteCoinItemProps {
-  coin: CoinData;
+  coinId: string;
 }
 
-const FavoriteCoinItem: React.FC<FavoriteCoinItemProps> = ({ coin }) => {
+const FavoriteCoinItem: React.FC<FavoriteCoinItemProps> = ({ coinId }) => {
   const dispatch = useAppDispatch();
   const favoriteCoins = useSelector((state: RootState) => state.favorites.favoriteCoins);
 
-  const isFavorite = favoriteCoins.includes(coin.id);
+  const { data: coin, isLoading } = useGetCoinByIdQuery(coinId);
+
+  const isFavorite = favoriteCoins.includes(coinId);
 
   const handleToggleFavorite = () => {
-    dispatch(toggleFavorite(coin.id));
+    dispatch(toggleFavorite(coinId));
   };
 
   return (
     <div className="coin-item">
-      <Link to={`/coins/${coin.id}`}>
-        <img src={coin.image?.large} alt={coin.name} />
-        <div>
-          <h2>
-            {coin.name} ({coin.symbol.toUpperCase()})
-          </h2>
-          <p>
-            Price: $
-            {coin.market_data?.current_price?.usd?.toLocaleString() ?? 'N/A'}
-          </p>
-          <p>
-            24h Change:{' '}
-            {coin.market_data?.price_change_percentage_24h?.toFixed(2) ?? 'N/A'}%
-          </p>
-        </div>
-      </Link>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <Link to={`/coins/${coinId}`}>
+          <img src={coin?.image?.large} alt={coin?.name} />
+          <div>
+            <h2>
+              {coin?.name} ({coin?.symbol.toUpperCase()})
+            </h2>
+            <p>
+              Price: $
+              {coin?.market_data?.current_price?.usd?.toLocaleString() ?? 'N/A'}
+            </p>
+            <p>
+              24h Change{' '}
+              {coin?.market_data?.price_change_percentage_24h?.toFixed(2) ?? 'N/A'}%
+            </p>
+          </div>
+        </Link>
+      )}
       <button
         onClick={handleToggleFavorite}
         className="favorite-button"

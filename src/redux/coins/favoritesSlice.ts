@@ -1,15 +1,8 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import axios, { AxiosError } from 'axios';
-import type { CoinData } from '../../types/coinTypes';
-
-const API_URL = 'https://api.coingecko.com/api/v3';
 
 interface FavoritesState {
   favoriteCoins: string[];
-  favoriteCoinsData: Record<string, CoinData>;
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error: string | null;
 }
 
 const loadFavoritesFromStorage = (): string[] => {
@@ -24,24 +17,8 @@ const loadFavoritesFromStorage = (): string[] => {
 
 const initialState: FavoritesState = {
   favoriteCoins: loadFavoritesFromStorage(),
-  favoriteCoinsData: {},
-  status: 'idle',
-  error: null,
 };
 
-export const fetchCoinById = createAsyncThunk<CoinData, string>(
-  'favorites/fetchCoinById',
-  async (id, { rejectWithValue }) => {
-    try {
-      const response = await axios.get<CoinData>(`${API_URL}/coins/${id}`);
-      console.log(response.data);
-      return response.data;
-    } catch (error) {
-      const err = error as AxiosError;
-      return rejectWithValue(err.response?.data || err.message || 'Failed to fetch coin');
-    }
-  }
-);
 
 const favoritesSlice = createSlice({
   name: 'favorites',
@@ -54,7 +31,6 @@ const favoritesSlice = createSlice({
         state.favoriteCoins.push(coinId);
       } else {
         state.favoriteCoins.splice(index, 1);
-        delete state.favoriteCoinsData[coinId];
       }
       localStorage.setItem('favoriteCoins', JSON.stringify(state.favoriteCoins));
     },
@@ -63,22 +39,7 @@ const favoritesSlice = createSlice({
       localStorage.setItem('favoriteCoins', JSON.stringify(state.favoriteCoins));
     },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchCoinById.pending, (state) => {
-        state.status = 'loading';
-        state.error = null;
-      })
-      .addCase(fetchCoinById.fulfilled, (state, action) => {
-        const coin = action.payload;
-        state.favoriteCoinsData[coin.id] = coin;
-        state.status = 'succeeded';
-      })
-      .addCase(fetchCoinById.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = typeof action.payload === 'string' ? action.payload : 'Failed to fetch coin';
-      });
-  },
+  extraReducers: () => {},
 });
 
 export const { toggleFavorite, setFavorites } = favoritesSlice.actions;

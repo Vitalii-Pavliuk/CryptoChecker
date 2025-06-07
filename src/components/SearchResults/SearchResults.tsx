@@ -1,24 +1,19 @@
 import React from 'react';
-import type { CoinSearchResult } from '../../types/coinTypes';
 import CoinCard from '../CoinCard/CoinCard';
+import { useSearchCoinsQuery } from '../../redux/services/coinGeckoApi';
 
 interface SearchResultsProps {
-  results: CoinSearchResult[];
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error: string | null;
   query: string;
 }
 
-const SearchResults: React.FC<SearchResultsProps> = ({
-  results,
-  status,
-  error,
-  query,
-}) => {
+const SearchResults: React.FC<SearchResultsProps> = ({ query }) => {
+  const { data: results = [], isLoading, isError, error } = useSearchCoinsQuery(query, {
+    skip: query.trim() === '',
+  });
   return (
     <div className="search-results">
-      {status === 'loading' && <div className="loading">Searching coins...</div>}
-      {status === 'failed' && <div className="error">Search error: {error}</div>}
+      {isLoading && <div className="loading">Searching coins...</div>}
+      {isError && <div className="error">Search error: {String(error)}</div>}
       {results.length > 0 ? (
         <div className="coins-grid">
           {results.map((coin) => (
@@ -35,7 +30,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({
           ))}
         </div>
       ) : (
-        status === 'succeeded' && query !== '' && (
+        !isLoading && query !== '' && (
           <div className="no-results">
             No cryptocurrencies found for "{query}"
           </div>

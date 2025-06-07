@@ -1,34 +1,32 @@
-import React, { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { fetchCoins } from '../../redux/coins/coinsSlice';
+import React, { useEffect, useState } from 'react';
 import SearchBar from '../SearchBar/SearchBar';
 import TopCryptoList from '../TopCryptoList/TopCryptoList';
 import SearchResults from '../SearchResults/SearchResults';
+import { useGetCoinsQuery } from '../../redux/services/coinGeckoApi';
+import type { Coin } from '../../types/coinTypes';
 
 
 const CryptoList: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const { 
-    coins, 
-    searchResults,
-    status, 
-    searchStatus,
-    error, 
-    hasMore,
-    searchQuery,
-    page,
-  } = useAppSelector((state) => state.coins);
-  
+  const [page, setPage] = useState(1);
+  const [coins, setCoins] = useState<Coin[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const { data: coinsData = [], isLoading, error } = useGetCoinsQuery(page, {
+    skip: searchQuery !== '',
+  });
 
   useEffect(() => {
-    if (searchQuery === '' && coins.length === 0) {
-      dispatch(fetchCoins(page));
+    if (coinsData.length > 0) {
+      setCoins((prev) => [
+        ...prev,
+        ...coinsData.filter((coin) => !prev.some((c) => c.id === coin.id)),
+      ]);
     }
-  }, [searchQuery, dispatch, coins.length]);
+  }, [coinsData]);
 
   const loadMore = () => {
-    if (hasMore && searchQuery === '') {
-      dispatch(fetchCoins(page-1));
+    if (coinsData.length === 20 && searchQuery === '') {
+      setPage((prev) => prev + 1);
     }
   };
 
@@ -37,21 +35,16 @@ const CryptoList: React.FC = () => {
       <h1 className="list-header">
         {searchQuery ? 'Search Results' : 'Top Cryptocurrencies'}
       </h1>
-      <SearchBar />
+      <SearchBar onSearchQueryChange={setSearchQuery} />
       
       {searchQuery ? (
-        <SearchResults 
-          results={searchResults}
-          status={searchStatus}
-          error={error}
-          query={searchQuery}
-        />
+        <SearchResults query={searchQuery} />
       ) : (
-        <TopCryptoList 
+        <TopCryptoList
           coins={coins}
-          status={status}
-          error={error}
-          hasMore={hasMore}
+          isLoading={isLoading}
+          error={error ? String(error) : null}
+          hasMore={coinsData.length === 20}
           onLoadMore={loadMore}
         />
       )}
