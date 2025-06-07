@@ -1,24 +1,10 @@
-// Чи варто зробити один інтерфейс для CoinData та CoinDetails? 
-
-
-export interface CoinData {
-
+export interface BaseCoin {
   id: string;
   symbol: string;
   name: string;
- market_data: {
-    current_price: { [key: string]: number };
-    price_change_percentage_24h: number;
- }
-image: {
-  large: string;
-}
 }
 
-export interface Coin {
-  id: string;
-  symbol: string;
-  name: string;
+export interface Coin extends BaseCoin {
   image: string;
   current_price: number;
   market_cap: number;
@@ -26,10 +12,17 @@ export interface Coin {
   price_change_percentage_24h: number;
 }
 
-export interface CoinDetails {
-  id: string;
-  symbol: string;
-  name: string;
+export interface CoinData extends BaseCoin {
+  image: {
+    large: string;
+  };
+  market_data: {
+    current_price: { [key: string]: number };
+    price_change_percentage_24h: number;
+  };
+}
+
+export interface CoinDetails extends BaseCoin {
   image: {
     small: string;
     thumb: string;
@@ -47,6 +40,13 @@ export interface CoinDetails {
   };
 }
 
+export interface CoinSearchResult extends BaseCoin {
+  api_symbol: string;
+  market_cap_rank: number | null;
+  thumb: string;
+  large: string;
+}
+
 export type CoinChart = {
   prices: [number, number][];
   market_caps: [number, number][];
@@ -54,13 +54,3 @@ export type CoinChart = {
   last_updated: string;
   days: number;
 };
-
-export interface CoinSearchResult {
-  id: string;
-  name: string;
-  api_symbol: string;
-  symbol: string;
-  market_cap_rank: number | null;
-  thumb: string;
-  large: string;
-}

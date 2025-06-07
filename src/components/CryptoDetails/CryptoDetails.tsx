@@ -1,23 +1,14 @@
-import React, { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { fetchCoinDetails } from '../../redux/coins/coinDetailsSlice';
+import React from 'react';
 import { useParams } from 'react-router-dom';
+import { useGetCoinDetailsQuery } from '../../redux/services/coinGeckoApi';
 
 const CryptoDetails: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const { coin, status, error } = useAppSelector((state) => state.coinDetails);
   const { id } = useParams<{ id: string }>();
+  const { data: coin, isLoading, isError, error } = useGetCoinDetailsQuery(id ?? '', { skip: !id });
 
-  useEffect(() => {
-    if (id) {
-      dispatch(fetchCoinDetails(id));
-    }
-  }, [dispatch, id]);
-
-  if (status === 'loading') return <div className="loading">Loading coin details...</div>;
-  if (status === 'failed') return <div className="error">Error: {error}</div>;
+  if (isLoading) return <div className="loading">Loading coin details...</div>;
+  if (isError) return <div className="error">Error: {String(error)}</div>;
   if (!coin) return <div className="no-data">No coin data available</div>;
-
   return (
     <div className="coin-details-page">
       <div className="coin-header">
