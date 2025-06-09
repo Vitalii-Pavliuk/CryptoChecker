@@ -5,6 +5,7 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { toggleFavorite } from '../../redux/coins/favoritesSlice';
 import type { RootState } from '../../redux/store';
 import { useGetCoinByIdQuery } from '../../redux/services/coinGeckoApi';
+import './FavoriteCoinItem.css';
 
 interface FavoriteCoinItemProps {
   coinId: string;

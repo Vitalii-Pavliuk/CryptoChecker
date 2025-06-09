@@ -4,6 +4,7 @@ import { auth } from '../../firebase/firebase';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/User/authSlice';
 import { useNavigate, Link } from 'react-router-dom';
+import './LoginForm.css';
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -32,47 +33,50 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleLogin}>
+    <form className="login-form" onSubmit={handleLogin}>
+      <h2 className="form-title">Login</h2>
+      
+      <div className="form-group">
+        <label className="form-label" htmlFor="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          className="form-input"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          placeholder="Enter your email"
+        />
+      </div>
+
+      <div className="form-group">
+        <label className="form-label" htmlFor="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          className="form-input"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          placeholder="Enter your password"
+        />
+      </div>
+
       {error && <div className="error-message">{error}</div>}
 
-      <div className="form-group">
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          required
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          placeholder="Enter your password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          required
-        />
-      </div>
-
-      <button type="submit" className="auth-button" disabled={isLoading}>
-        {isLoading ? 'Signing In...' : 'Sign In'}
+      <button 
+        type="submit" 
+        className="submit-button"
+        disabled={isLoading}
+      >
+        {isLoading ? 'Logging in...' : 'Login'}
       </button>
 
-      <div className="auth-footer">
-        <p>
-          Don't have an account? <Link to="/register">Sign Up</Link>
-        </p>
-        <p>
-          <Link to="/forgot-password">Forgot Password?</Link>
-        </p>
+      <div className="form-footer">
+        Don't have an account? <Link to="/register">Register</Link>
       </div>
     </form>
   );
 };
 
-export { LoginForm };
+export default LoginForm;

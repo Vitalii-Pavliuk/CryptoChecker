@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { useLazyGetCoinChartQuery } from '../../redux/services/coinGeckoApi';
+import './CryptoChart.css';
 
 const CryptoChart: React.FC = () => {
   const { id } = useParams<{ id: string }>();

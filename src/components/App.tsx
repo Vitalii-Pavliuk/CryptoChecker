@@ -10,6 +10,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase/firebase';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { setUser, clearUser } from '../redux/User/authSlice';
+import './App.css';
 
 export default function App() {
   const dispatch = useAppDispatch();

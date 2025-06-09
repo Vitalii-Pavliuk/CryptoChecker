@@ -4,6 +4,7 @@ import { auth } from '../../firebase/firebase';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/User/authSlice';
 import { useNavigate, Link } from 'react-router-dom';
+import './RegisterForm.css';
 
 const RegisterForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -23,13 +24,8 @@ const RegisterForm: React.FC = () => {
       return;
     }
 
-    if (password.length < 6) {
-      setError('Password must be at least 6 characters');
-      return;
-    }
-
+    setIsLoading(true);
     try {
-      setIsLoading(true);
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       dispatch(setUser({
         email: userCredential.user.email,
@@ -37,65 +33,72 @@ const RegisterForm: React.FC = () => {
       }));
       navigate('/coins');
     } catch (error: any) {
-      setError(error.message || 'Failed to create account');
+      setError(error.message || 'Failed to create account. Please try again.');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleRegister}>
+    <form className="register-form" onSubmit={handleRegister}>
+      <h2 className="form-title">Create Account</h2>
+      
+      <div className="form-group">
+        <label className="form-label" htmlFor="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          className="form-input"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          placeholder="Enter your email"
+        />
+      </div>
+
+      <div className="form-group">
+        <label className="form-label" htmlFor="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          className="form-input"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          placeholder="Create a password"
+          minLength={6}
+        />
+      </div>
+
+      <div className="form-group">
+        <label className="form-label" htmlFor="confirmPassword">Confirm Password</label>
+        <input
+          id="confirmPassword"
+          type="password"
+          className="form-input"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
+          placeholder="Confirm your password"
+          minLength={6}
+        />
+      </div>
+
       {error && <div className="error-message">{error}</div>}
 
-      <div className="form-group">
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          required
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          placeholder="Create a password (min 6 chars)"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          required
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="confirmPassword">Confirm Password</label>
-        <input
-          type="password"
-          id="confirmPassword"
-          placeholder="Confirm your password"
-          value={confirmPassword}
-          onChange={e => setConfirmPassword(e.target.value)}
-          required
-        />
-      </div>
-
-      <button
-        type="submit"
-        className="auth-button"
+      <button 
+        type="submit" 
+        className="submit-button"
         disabled={isLoading}
       >
-        {isLoading ? 'Creating Account...' : 'Sign Up'}
+        {isLoading ? 'Creating Account...' : 'Register'}
       </button>
 
-      <div className="auth-footer">
-        <p>Already have an account? <Link to="/login">Sign In</Link></p>
+      <div className="form-footer">
+        Already have an account? <Link to="/login">Login</Link>
       </div>
     </form>
   );
 };
 
-export { RegisterForm };
+export default RegisterForm;
