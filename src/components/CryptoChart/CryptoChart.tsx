@@ -4,10 +4,7 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'rec
 import { useLazyGetCoinChartQuery } from '../../redux/services/coinGeckoApi';
 import './CryptoChart.css';
 
-const CryptoChart: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-
-  const periods = {
+const periods = {
   '1D': 1,
   '7D': 7,
   '1M': 30,
@@ -15,51 +12,67 @@ const CryptoChart: React.FC = () => {
   '1Y': 365,
 };
 
-  const defaultDays = 7;
+const defaultDays = 7;
+
+const CryptoChart: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const [selectedPeriod, setSelectedPeriod] = React.useState(defaultDays);
 
   const [trigger, { data: coin, isLoading, isError, error }] = useLazyGetCoinChartQuery();
 
   React.useEffect(() => {
     if (id) {
-      trigger({ id, days: defaultDays });
+      trigger({ id, days: selectedPeriod });
     }
-  }, [id, trigger]);
+  }, [id, trigger, selectedPeriod]);
 
   if (isLoading) return <div className="loading">Loading coin Chart...</div>;
   if (isError) return <div className="error">Error: {String(error)}</div>;
   if (!coin || !coin.prices) return <div className="no-data">No Chart available</div>;
 
+  const formatTime = (timestamp: number) => {
+    const date = new Date(timestamp);
+    if (selectedPeriod === 1) {
+      return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+    if (selectedPeriod === 7) {
+      return date.toLocaleDateString([], { day: '2-digit', month: '2-digit' }) + ' ' +
+             date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+    return date.toLocaleDateString();
+  };
+
   const chartData = coin.prices.map(([timestamp, price]) => ({
-    time: new Date(timestamp).toLocaleDateString(),
+    time: formatTime(timestamp),
     price: price,
   }));
 
   return (
     <div className="crypto-chart">
-    <ResponsiveContainer width="100%" height={300}>
-      <LineChart data={chartData}>
-        <XAxis dataKey="time" />
-        <YAxis domain={['auto', 'auto']} />
-        <Tooltip 
-          formatter={(value) => [`$${Number(value).toFixed(2)}`, 'Price']}
-          labelStyle={{ color: '#333', fontWeight: 'bold' }}
-        />
-        <Line 
-          type="monotone" 
-          dataKey="price" 
-          stroke="red" 
-          strokeWidth={2} 
-          dot={false}
-          activeDot={{ r: 6, strokeWidth: 0 }}
-        />
-      </LineChart>
-    </ResponsiveContainer>
-    <div className="chart-controls">
+      <ResponsiveContainer width="100%" height={300}>
+        <LineChart data={chartData}>
+          <XAxis dataKey="time" minTickGap={20} />
+          <YAxis domain={['auto', 'auto']} />
+          <Tooltip
+            formatter={(value) => [`$${Number(value).toFixed(2)}`, 'Price']}
+            labelStyle={{ color: '#333', fontWeight: 'bold' }}
+          />
+          <Line
+            type="monotone"
+            dataKey="price"
+            stroke="red"
+            strokeWidth={2}
+            dot={false}
+            activeDot={{ r: 6, strokeWidth: 0 }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
+      <div className="chart-controls">
         {Object.entries(periods).map(([label, days]) => (
           <button
             key={days}
-            onClick={() => id && trigger({ id, days })}
-            className="chart-period-button"
+            onClick={() => setSelectedPeriod(days)}
+            className={`chart-period-button ${selectedPeriod === days ? 'active' : ''}`}
           >
             {label}
           </button>
