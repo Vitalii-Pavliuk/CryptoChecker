@@ -4,6 +4,7 @@ import { useGetCoinDetailsQuery } from '../../redux/services/coinGeckoApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleFavorite } from '../../redux/coins/favoritesSlice';
 import type { RootState } from '../../redux/store';
+import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import './CryptoDetails.css';
 
 const CryptoDetails: React.FC = () => {
@@ -20,7 +21,8 @@ const CryptoDetails: React.FC = () => {
   };
 
   if (isLoading) return <div className="loading">Loading coin details...</div>;
-  if (isError) return <div className="error">Error: {String(error)}</div>;
+if (isError) return <ErrorMessage error={error} />;
+
   if (!coin) return <div className="no-data">No coin data available</div>;
   return (
     <div className="coin-details-page">

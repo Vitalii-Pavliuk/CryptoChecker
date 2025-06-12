@@ -4,6 +4,7 @@ import { auth } from '../../firebase/firebase';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/User/authSlice';
 import { useNavigate, Link } from 'react-router-dom';
+import { ErrorMessage } from '../ErrorMessage/ErrorMessage'; 
 import './RegisterForm.css';
 
 const RegisterForm: React.FC = () => {
@@ -84,7 +85,7 @@ const RegisterForm: React.FC = () => {
         />
       </div>
 
-      {error && <div className="error-message">{error}</div>}
+      {error && <ErrorMessage error={{ message: error }} />}
 
       <button 
         type="submit" 

@@ -4,11 +4,12 @@ import type { Coin } from '../../types/coinTypes';
 import CoinCard from '../CoinCard/CoinCard';
 import { toggleFavorite } from '../../redux/coins/favoritesSlice';
 import type { RootState } from '../../redux/store';
+import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 
 interface TopCryptoListProps {
   coins: Coin[];
   isLoading: boolean;
-  error: string | null;
+  error: any;
   hasMore: boolean;
   onLoadMore: () => void;
 }
@@ -31,7 +32,7 @@ const TopCryptoList: React.FC<TopCryptoListProps> = ({
   return (
     <div className="top-crypto-list">
       {isLoading && coins.length === 0 && <div className="loading">Loading coins...</div>}
-      {error && <div className="error">Error: {error}</div>}
+      {error && <ErrorMessage error={error} />}
       {coins.length > 0 && (
         <>
           <div className="coins-grid">

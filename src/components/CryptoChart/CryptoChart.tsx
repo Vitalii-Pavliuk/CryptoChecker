@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { useLazyGetCoinChartQuery } from '../../redux/services/coinGeckoApi';
+import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import './CryptoChart.css';
 
 const periods = {
@@ -27,7 +28,7 @@ const CryptoChart: React.FC = () => {
   }, [id, trigger, selectedPeriod]);
 
   if (isLoading) return <div className="loading">Loading coin Chart...</div>;
-  if (isError) return <div className="error">Error: {String(error)}</div>;
+  if (isError) return <ErrorMessage error={error} />;
   if (!coin || !coin.prices) return <div className="no-data">No Chart available</div>;
 
   const formatTime = (timestamp: number) => {
@@ -36,8 +37,11 @@ const CryptoChart: React.FC = () => {
       return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
     if (selectedPeriod === 7) {
-      return date.toLocaleDateString([], { day: '2-digit', month: '2-digit' }) + ' ' +
-             date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      return (
+        date.toLocaleDateString([], { day: '2-digit', month: '2-digit' }) +
+        ' ' +
+        date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      );
     }
     return date.toLocaleDateString();
   };

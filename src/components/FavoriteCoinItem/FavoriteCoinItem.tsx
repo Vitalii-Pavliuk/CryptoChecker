@@ -5,6 +5,7 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { toggleFavorite } from '../../redux/coins/favoritesSlice';
 import type { RootState } from '../../redux/store';
 import { useGetCoinByIdQuery } from '../../redux/services/coinGeckoApi';
+import { ErrorMessage } from '../ErrorMessage/ErrorMessage'; 
 import './FavoriteCoinItem.css';
 
 interface FavoriteCoinItemProps {
@@ -15,13 +16,17 @@ const FavoriteCoinItem: React.FC<FavoriteCoinItemProps> = ({ coinId }) => {
   const dispatch = useAppDispatch();
   const favoriteCoins = useSelector((state: RootState) => state.favorites.favoriteCoins);
 
-  const { data: coin, isLoading } = useGetCoinByIdQuery(coinId);
+  const { data: coin, isLoading, isError, error } = useGetCoinByIdQuery(coinId);
 
   const isFavorite = favoriteCoins.includes(coinId);
 
   const handleToggleFavorite = () => {
     dispatch(toggleFavorite(coinId));
   };
+
+  if (isError) {
+    return <ErrorMessage error={error} />;
+  }
 
   return (
     <div className="coin-item">
