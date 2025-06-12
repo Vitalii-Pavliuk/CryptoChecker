@@ -1,6 +1,7 @@
-
 export type AppError = {
   status?: number | string;
+  originalStatus?: number | string;
+  error?: string;
   data?: { message?: string };
   message?: string;
 };
@@ -14,31 +15,43 @@ const errorStatusMessages: Record<number | string, string> = {
 export function getErrorMessage(error: unknown): string {
   if (!error || typeof error !== 'object') return 'Невідома помилка';
 
-  const err = error as AppError;
+  const err = error as any;
 
-  // 1. Якщо є спеціальне повідомлення для статусу
+  if (err.status === 429 || err.originalStatus === 429) {
+    return 'Забагато запитів! Спробуйте пізніше';
+  }
+  if (err.status === 'FETCH_ERROR') {
+    return 'Не вдалося виконати запит. Можливо, забагато запитів або проблема з мережею.';
+  }
+  if (err.error === 'PARSING_ERROR') {
+    return 'Забагато запитів! Спробуйте пізніше';
+  }
   if (err.status && errorStatusMessages[err.status]) {
     return errorStatusMessages[err.status];
   }
-
-  // 2. Якщо є повідомлення з бекенду
+  if (err.error && errorStatusMessages[err.error]) {
+    return errorStatusMessages[err.error];
+  }
   if (err.data?.message) {
     return err.data.message;
   }
-
-  // 3. Якщо є error.message
   if (typeof err.message === 'string') {
     return err.message;
   }
-
-  // 4. Якщо є невідомий статус
+  if (typeof err.originalStatus === 'number') {
+    return `Запит завершився з кодом ${err.originalStatus}`;
+  }
   if (typeof err.status === 'number') {
     return `Запит завершився з кодом ${err.status}`;
+  }
+  if (typeof err.originalStatus === 'string') {
+    return `Помилка: ${err.originalStatus}`;
   }
   if (typeof err.status === 'string') {
     return `Помилка: ${err.status}`;
   }
-
-  // 5. Якщо нічого не підійшло
+  if (typeof err.error === 'string') {
+    return err.error;
+  }
   return 'Несподівана помилка';
 }

@@ -5,7 +5,6 @@ import SearchResults from '../SearchResults/SearchResults';
 import { useGetCoinsQuery } from '../../redux/services/coinGeckoApi';
 import type { Coin } from '../../types/coinTypes';
 
-
 const CryptoList: React.FC = () => {
   const [page, setPage] = useState(1);
   const [coins, setCoins] = useState<Coin[]>([]);
@@ -36,14 +35,14 @@ const CryptoList: React.FC = () => {
         {searchQuery ? 'Search Results' : 'Top Cryptocurrencies'}
       </h1>
       <SearchBar onSearchQueryChange={setSearchQuery} />
-      
+
       {searchQuery ? (
         <SearchResults query={searchQuery} />
       ) : (
         <TopCryptoList
           coins={coins}
           isLoading={isLoading}
-          error={error ? String(error) : null}
+          error={error}
           hasMore={coinsData.length === 20}
           onLoadMore={loadMore}
         />

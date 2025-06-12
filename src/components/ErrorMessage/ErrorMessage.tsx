@@ -1,5 +1,3 @@
-// src/components/ErrorMessage.tsx
-
 import React from 'react';
 import { getErrorMessage } from '../../utils/errorUtils';
 

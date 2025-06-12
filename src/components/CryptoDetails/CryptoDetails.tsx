@@ -21,8 +21,7 @@ const CryptoDetails: React.FC = () => {
   };
 
   if (isLoading) return <div className="loading">Loading coin details...</div>;
-if (isError) return <ErrorMessage error={error} />;
-
+  if (isError) return <ErrorMessage error={error} />;
   if (!coin) return <div className="no-data">No coin data available</div>;
   return (
     <div className="coin-details-page">

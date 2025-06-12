@@ -16,7 +16,6 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query }) => {
     <div className="search-results">
       {isLoading && <div className="loading">Searching coins...</div>}
       {isError && <ErrorMessage error={error} />}
-
       {results.length > 0 ? (
         <div className="coins-grid">
           {results.map((coin) => (
