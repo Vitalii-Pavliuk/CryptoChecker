@@ -5,6 +5,7 @@ import CoinCard from '../CoinCard/CoinCard';
 import { toggleFavorite } from '../../redux/coins/favoritesSlice';
 import type { RootState } from '../../redux/store';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
+import { Loader } from '../Loader/Loader';
 
 interface TopCryptoListProps {
   coins: Coin[];
@@ -31,7 +32,7 @@ const TopCryptoList: React.FC<TopCryptoListProps> = ({
 
   return (
     <div className="top-crypto-list">
-      {isLoading && coins.length === 0 && <div className="loading">Loading coins...</div>}
+      {isLoading && coins.length === 0 && <Loader />}
       {!!error && <ErrorMessage error={error} />}
       {coins.length > 0 && (
         <>
@@ -56,7 +57,7 @@ const TopCryptoList: React.FC<TopCryptoListProps> = ({
           {hasMore && (
             <div className="load-more-container">
               <button onClick={onLoadMore} disabled={isLoading} className="load-more-button">
-                {isLoading ? 'Loading...' : 'Load More'}
+                {isLoading ? <Loader /> : 'Load More'}
               </button>
             </div>
           )}

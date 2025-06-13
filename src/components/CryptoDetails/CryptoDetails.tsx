@@ -6,6 +6,7 @@ import { toggleFavorite } from '../../redux/coins/favoritesSlice';
 import type { RootState } from '../../redux/store';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import './CryptoDetails.css';
+import { Loader } from '../Loader/Loader';
 
 const CryptoDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -20,7 +21,7 @@ const CryptoDetails: React.FC = () => {
     }
   };
 
-  if (isLoading) return <div className="loading">Loading coin details...</div>;
+  if (isLoading) return <Loader />;
   if (isError) return <ErrorMessage error={error} />;
   if (!coin) return <div className="no-data">No coin data available</div>;
   return (

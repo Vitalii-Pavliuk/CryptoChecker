@@ -5,6 +5,7 @@ import { FavoriteCoinItem } from '../FavoriteCoinItem/FavoriteCoinItem';
 import { useGetCoinsByIdsQuery } from '../../redux/services/coinGeckoApi';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import './FavoritesList.css';
+import { Loader } from '../Loader/Loader';
 
 const FavoritesList: React.FC = () => {
   const { favoriteCoins } = useSelector((state: RootState) => state.favorites);
@@ -17,17 +18,12 @@ const FavoritesList: React.FC = () => {
     skip: favoriteCoins.length === 0,
   });
 
-  if (favoriteCoins.length === 0) {
-    return <p>No favorite coins added yet.</p>;
-  }
+  if (favoriteCoins.length === 0) return <p>No favorite coins added yet.</p>;
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  if (isLoading) return <Loader />;
 
-  if (isError) {
-    return <ErrorMessage error={error} />;
-  }
+  if (isError) return <ErrorMessage error={error} />;
+
 
   return (
     <div>

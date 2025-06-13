@@ -4,6 +4,7 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'rec
 import { useLazyGetCoinChartQuery } from '../../redux/services/coinGeckoApi';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import './CryptoChart.css';
+import { Loader } from '../Loader/Loader';
 
 const periods = {
   '1D': 1,
@@ -27,7 +28,7 @@ const CryptoChart: React.FC = () => {
     }
   }, [id, trigger, selectedPeriod]);
 
-  if (isLoading) return <div className="loading">Loading coin Chart...</div>;
+  if (isLoading) return <Loader />;
   if (isError) return <ErrorMessage error={error} />;
   if (!coin || !coin.prices) return <div className="no-data">No Chart available</div>;
 

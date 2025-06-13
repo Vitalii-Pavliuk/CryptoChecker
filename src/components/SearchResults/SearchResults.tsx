@@ -2,6 +2,7 @@ import React from 'react';
 import CoinCard from '../CoinCard/CoinCard';
 import { useSearchCoinsQuery } from '../../redux/services/coinGeckoApi';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
+import { Loader } from '../Loader/Loader';
 
 interface SearchResultsProps {
   query: string;
@@ -19,7 +20,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query }) => {
 
   return (
     <div className="search-results">
-      {isLoading && <div className="loading">Searching coins...</div>}
+      {isLoading && <Loader />}
       {isError && <ErrorMessage error={error} />}
       {results.length > 0 ? (
         <div className="coins-grid">

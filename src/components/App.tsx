@@ -3,8 +3,6 @@ import RequireAuth from './RequireAuth';
 import { RegisterPage } from '../pages/RegisterPage';
 import { LoginPage } from '../pages/LoginPage';
 import CryptoList from '../components/CryptoList/CryptoList';
-import CryptoDetails from '../components/CryptoDetails/CryptoDetails';
-import CryptoChart from '../components/CryptoChart/CryptoChart';
 import { FavoritesPage } from '../pages/FavoritesPage';
 import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -12,6 +10,7 @@ import { auth } from '../firebase/firebase';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { setUser, clearUser } from '../redux/User/authSlice';
 import './App.css';
+import CryptoDetailsPage from '../pages/CryptoDetailsPage';
 
 export default function App() {
   const dispatch = useAppDispatch();
@@ -104,8 +103,7 @@ export default function App() {
             element={
               <RequireAuth>
                 <>
-                  <CryptoChart />
-                  <CryptoDetails />
+ <CryptoDetailsPage />
                 </>
               </RequireAuth>
             }
@@ -120,6 +118,9 @@ export default function App() {
           />
         </Routes>
       </div>
+      <footer className="footer">
+        <span>© 2024 CryptoChecker. Всі права захищені.</span>
+      </footer>
     </BrowserRouter>
   );
 }
