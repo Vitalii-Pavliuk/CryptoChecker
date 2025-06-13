@@ -1,5 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { Coin, CoinSearchResult, CoinDetails, CoinChart, CoinData } from '../../types/coinTypes';
+import type {
+  Coin,
+  CoinSearchResult,
+  CoinDetails,
+  CoinChart,
+  CoinData,
+} from '../../types/coinTypes';
 
 export const coinGeckoApi = createApi({
   reducerPath: 'coinGeckoApi',
@@ -53,7 +59,7 @@ export const coinGeckoApi = createApi({
         return response;
       },
     }),
-        getCoinsByIds: builder.query<Coin[], string[]>({
+    getCoinsByIds: builder.query<Coin[], string[]>({
       query: (ids) => ({
         url: 'coins/markets',
         params: {

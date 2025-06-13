@@ -8,7 +8,12 @@ interface SearchResultsProps {
 }
 
 const SearchResults: React.FC<SearchResultsProps> = ({ query }) => {
-  const { data: results = [], isLoading, isError, error } = useSearchCoinsQuery(query, {
+  const {
+    data: results = [],
+    isLoading,
+    isError,
+    error,
+  } = useSearchCoinsQuery(query, {
     skip: query.trim() === '',
   });
 
@@ -32,11 +37,8 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query }) => {
           ))}
         </div>
       ) : (
-        !isLoading && query !== '' && (
-          <div className="no-results">
-            No cryptocurrencies found for "{query}"
-          </div>
-        )
+        !isLoading &&
+        query !== '' && <div className="no-results">No cryptocurrencies found for "{query}"</div>
       )}
     </div>
   );

@@ -9,7 +9,6 @@ const initialState: FavoritesState = {
   favoriteCoins: [],
 };
 
-
 const favoritesSlice = createSlice({
   name: 'favorites',
   initialState,

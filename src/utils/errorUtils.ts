@@ -15,7 +15,7 @@ const errorStatusMessages: Record<number | string, string> = {
 export function getErrorMessage(error: unknown): string {
   if (!error || typeof error !== 'object') return 'Невідома помилка';
 
-const err = error as AppError;
+  const err = error as AppError;
 
   if (err.status === 429 || err.originalStatus === 429) {
     return 'Забагато запитів! Спробуйте пізніше';

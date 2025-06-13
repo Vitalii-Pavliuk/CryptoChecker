@@ -11,7 +11,9 @@
   font-size: 1rem;
   border: 2px solid #ddd;
   border-radius: 8px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .search-input:focus {
@@ -22,4 +24,4 @@
 
 .search-input::placeholder {
   color: #999;
-} 
+}

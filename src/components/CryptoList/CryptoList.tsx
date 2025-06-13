@@ -10,7 +10,11 @@ const CryptoList: React.FC = () => {
   const [coins, setCoins] = useState<Coin[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { data: coinsData = [], isLoading, error } = useGetCoinsQuery(page, {
+  const {
+    data: coinsData = [],
+    isLoading,
+    error,
+  } = useGetCoinsQuery(page, {
     skip: searchQuery !== '',
   });
 
@@ -31,9 +35,7 @@ const CryptoList: React.FC = () => {
 
   return (
     <div className="crypto-list">
-      <h1 className="list-header">
-        {searchQuery ? 'Search Results' : 'Top Cryptocurrencies'}
-      </h1>
+      <h1 className="list-header">{searchQuery ? 'Search Results' : 'Top Cryptocurrencies'}</h1>
       <SearchBar onSearchQueryChange={setSearchQuery} />
 
       {searchQuery ? (

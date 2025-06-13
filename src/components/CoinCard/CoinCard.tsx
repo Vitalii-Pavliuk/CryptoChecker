@@ -52,7 +52,8 @@ const CoinCard: React.FC<CoinCardProps> = ({
           className="coin-change"
           style={{ color: change24h > 0 ? 'green' : 'red', fontWeight: 'bold' }}
         >
-          {change24h > 0 ? '+' : ''}{change24h.toFixed(2)}%
+          {change24h > 0 ? '+' : ''}
+          {change24h.toFixed(2)}%
         </p>
       )}
     </Link>

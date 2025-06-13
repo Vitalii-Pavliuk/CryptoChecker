@@ -23,17 +23,19 @@ const LoginForm: React.FC = () => {
     setIsLoading(true);
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      dispatch(setUser({
-        email: userCredential.user.email,
-        uid: userCredential.user.uid
-      }));
+      dispatch(
+        setUser({
+          email: userCredential.user.email,
+          uid: userCredential.user.uid,
+        }),
+      );
       navigate(from, { replace: true });
     } catch (error: unknown) {
-    if (error instanceof Error) {
-      setError(error.message || 'Failed to sign in. Please check your credentials.');
-    } else {
-      setError('Failed to sign in. Please check your credentials.');
-    }
+      if (error instanceof Error) {
+        setError(error.message || 'Failed to sign in. Please check your credentials.');
+      } else {
+        setError('Failed to sign in. Please check your credentials.');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -41,9 +43,11 @@ const LoginForm: React.FC = () => {
   return (
     <form className="login-form" onSubmit={handleLogin}>
       <h2 className="form-title">Login</h2>
-      
+
       <div className="form-group">
-        <label className="form-label" htmlFor="email">Email</label>
+        <label className="form-label" htmlFor="email">
+          Email
+        </label>
         <input
           id="email"
           type="email"
@@ -56,7 +60,9 @@ const LoginForm: React.FC = () => {
       </div>
 
       <div className="form-group">
-        <label className="form-label" htmlFor="password">Password</label>
+        <label className="form-label" htmlFor="password">
+          Password
+        </label>
         <input
           id="password"
           type="password"
@@ -70,11 +76,7 @@ const LoginForm: React.FC = () => {
 
       {error && <ErrorMessage error={{ message: error }} />}
 
-      <button 
-        type="submit" 
-        className="submit-button"
-        disabled={isLoading}
-      >
+      <button type="submit" className="submit-button" disabled={isLoading}>
         {isLoading ? 'Logging in...' : 'Login'}
       </button>
 

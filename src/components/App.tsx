@@ -16,7 +16,7 @@ import './App.css';
 export default function App() {
   const dispatch = useAppDispatch();
   const { user, isAuthenticated } = useAppSelector((state) => state.auth);
-  const [authChecked, setAuthChecked] = useState(false);  
+  const [authChecked, setAuthChecked] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
@@ -25,7 +25,7 @@ export default function App() {
           setUser({
             email: firebaseUser.email,
             uid: firebaseUser.uid,
-          })
+          }),
         );
       } else {
         dispatch(clearUser());
@@ -99,7 +99,7 @@ export default function App() {
               </RequireAuth>
             }
           />
-         <Route
+          <Route
             path="/coins/:id"
             element={
               <RequireAuth>

@@ -55,11 +55,7 @@ const TopCryptoList: React.FC<TopCryptoListProps> = ({
           </div>
           {hasMore && (
             <div className="load-more-container">
-              <button
-                onClick={onLoadMore}
-                disabled={isLoading}
-                className="load-more-button"
-              >
+              <button onClick={onLoadMore} disabled={isLoading} className="load-more-button">
                 {isLoading ? 'Loading...' : 'Load More'}
               </button>
             </div>
