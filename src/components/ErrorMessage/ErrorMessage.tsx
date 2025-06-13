@@ -6,5 +6,5 @@ type ErrorMessageProps = {
 };
 
 export const ErrorMessage: React.FC<ErrorMessageProps> = ({ error }) => (
-  <div className="error">Error: {getErrorMessage(error)}</div>
+  <div className="error"> {getErrorMessage(error)}</div>
 );

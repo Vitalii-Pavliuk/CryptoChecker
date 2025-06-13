@@ -5,18 +5,8 @@ interface FavoritesState {
   favoriteCoins: string[];
 }
 
-const loadFavoritesFromStorage = (): string[] => {
-  try {
-    const favorites = localStorage.getItem('favoriteCoins');
-    return favorites ? JSON.parse(favorites) : [];
-  } catch (error) {
-    console.error('Error loading favorites from localStorage:', error);
-    return [];
-  }
-};
-
 const initialState: FavoritesState = {
-  favoriteCoins: loadFavoritesFromStorage(),
+  favoriteCoins: [],
 };
 
 
@@ -32,11 +22,9 @@ const favoritesSlice = createSlice({
       } else {
         state.favoriteCoins.splice(index, 1);
       }
-      localStorage.setItem('favoriteCoins', JSON.stringify(state.favoriteCoins));
     },
     setFavorites: (state, action: PayloadAction<string[]>) => {
       state.favoriteCoins = action.payload;
-      localStorage.setItem('favoriteCoins', JSON.stringify(state.favoriteCoins));
     },
   },
   extraReducers: () => {},

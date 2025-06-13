@@ -53,6 +53,23 @@ export const coinGeckoApi = createApi({
         return response;
       },
     }),
+        getCoinsByIds: builder.query<Coin[], string[]>({
+      query: (ids) => ({
+        url: 'coins/markets',
+        params: {
+          vs_currency: 'usd',
+          ids: ids.join(','),
+          order: 'market_cap_desc',
+          per_page: ids.length,
+          sparkline: false,
+          price_change_percentage: '24h',
+        },
+      }),
+      transformResponse: (response: Coin[]) => {
+        console.log('getCoinsByIds response:', response);
+        return response;
+      },
+    }),
   }),
 });
 
@@ -62,5 +79,6 @@ export const {
   useGetCoinDetailsQuery,
   useGetCoinChartQuery,
   useGetCoinByIdQuery,
+  useGetCoinsByIdsQuery,
   useLazyGetCoinChartQuery,
 } = coinGeckoApi;

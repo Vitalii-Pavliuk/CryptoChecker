@@ -9,7 +9,7 @@ import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 interface TopCryptoListProps {
   coins: Coin[];
   isLoading: boolean;
-  error: any;
+  error: unknown;
   hasMore: boolean;
   onLoadMore: () => void;
 }
@@ -32,7 +32,7 @@ const TopCryptoList: React.FC<TopCryptoListProps> = ({
   return (
     <div className="top-crypto-list">
       {isLoading && coins.length === 0 && <div className="loading">Loading coins...</div>}
-      {error && <ErrorMessage error={error} />}
+      {!!error && <ErrorMessage error={error} />}
       {coins.length > 0 && (
         <>
           <div className="coins-grid">

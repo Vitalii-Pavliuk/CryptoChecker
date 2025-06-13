@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchCoinsQuery } from '../../redux/services/coinGeckoApi';
 import './SearchBar.css';
 
 interface SearchBarProps {

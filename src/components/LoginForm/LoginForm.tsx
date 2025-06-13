@@ -3,7 +3,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase/firebase';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/User/authSlice';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import './LoginForm.css';
 
@@ -14,6 +14,8 @@ const LoginForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = (location.state as { from?: { pathname: string } })?.from?.pathname || '/coins';
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,14 +27,17 @@ const LoginForm: React.FC = () => {
         email: userCredential.user.email,
         uid: userCredential.user.uid
       }));
-      navigate('/coins');
-    } catch (error: any) {
+      navigate(from, { replace: true });
+    } catch (error: unknown) {
+    if (error instanceof Error) {
       setError(error.message || 'Failed to sign in. Please check your credentials.');
+    } else {
+      setError('Failed to sign in. Please check your credentials.');
+    }
     } finally {
       setIsLoading(false);
     }
   };
-
   return (
     <form className="login-form" onSubmit={handleLogin}>
       <h2 className="form-title">Login</h2>

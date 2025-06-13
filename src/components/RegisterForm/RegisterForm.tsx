@@ -33,8 +33,12 @@ const RegisterForm: React.FC = () => {
         uid: userCredential.user.uid
       }));
       navigate('/coins');
-    } catch (error: any) {
-      setError(error.message || 'Failed to create account. Please try again.');
+    }catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message || 'Failed to create account. Please try again.');
+      } else {
+        setError('Failed to create account. Please try again.');
+      }
     } finally {
       setIsLoading(false);
     }

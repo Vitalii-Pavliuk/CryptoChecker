@@ -4,52 +4,35 @@ import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../hooks/hooks';
 import { toggleFavorite } from '../../redux/coins/favoritesSlice';
 import type { RootState } from '../../redux/store';
-import { useGetCoinByIdQuery } from '../../redux/services/coinGeckoApi';
-import { ErrorMessage } from '../ErrorMessage/ErrorMessage'; 
+import type { Coin } from '../../types/coinTypes';
 import './FavoriteCoinItem.css';
 
 interface FavoriteCoinItemProps {
-  coinId: string;
+  coin: Coin;
 }
 
-const FavoriteCoinItem: React.FC<FavoriteCoinItemProps> = ({ coinId }) => {
+const FavoriteCoinItem: React.FC<FavoriteCoinItemProps> = ({ coin }) => {
   const dispatch = useAppDispatch();
   const favoriteCoins = useSelector((state: RootState) => state.favorites.favoriteCoins);
 
-  const { data: coin, isLoading, isError, error } = useGetCoinByIdQuery(coinId);
-
-  const isFavorite = favoriteCoins.includes(coinId);
+  const isFavorite = favoriteCoins.includes(coin.id);
 
   const handleToggleFavorite = () => {
-    dispatch(toggleFavorite(coinId));
+    dispatch(toggleFavorite(coin.id));
   };
-
-  if (isError) {
-    return <ErrorMessage error={error} />;
-  }
 
   return (
     <div className="coin-item">
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <Link to={`/coins/${coinId}`}>
-          <img src={coin?.image?.large} alt={coin?.name} />
-          <div>
-            <h2>
-              {coin?.name} ({coin?.symbol.toUpperCase()})
-            </h2>
-            <p>
-              Price: $
-              {coin?.market_data?.current_price?.usd?.toLocaleString() ?? 'N/A'}
-            </p>
-            <p>
-              24h Change{' '}
-              {coin?.market_data?.price_change_percentage_24h?.toFixed(2) ?? 'N/A'}%
-            </p>
-          </div>
-        </Link>
-      )}
+      <Link to={`/coins/${coin.id}`}>
+        <img src={coin.image} alt={coin.name} />
+        <div>
+          <h2>
+            {coin.name} ({coin.symbol.toUpperCase()})
+          </h2>
+          <p>Price: ${coin.current_price.toLocaleString()}</p>
+          <p>24h Change {coin.price_change_percentage_24h.toFixed(2)}%</p>
+        </div>
+      </Link>
       <button
         onClick={handleToggleFavorite}
         className="favorite-button"

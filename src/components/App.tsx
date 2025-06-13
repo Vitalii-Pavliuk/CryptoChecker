@@ -1,11 +1,12 @@
 import { BrowserRouter, Routes, Route, NavLink, Navigate } from 'react-router-dom';
-import {RegisterPage} from '../pages/RegisterPage';
-import {LoginPage} from '../pages/LoginPage';
+import RequireAuth from './RequireAuth';
+import { RegisterPage } from '../pages/RegisterPage';
+import { LoginPage } from '../pages/LoginPage';
 import CryptoList from '../components/CryptoList/CryptoList';
 import CryptoDetails from '../components/CryptoDetails/CryptoDetails';
 import CryptoChart from '../components/CryptoChart/CryptoChart';
 import { FavoritesPage } from '../pages/FavoritesPage';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase/firebase';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
@@ -15,6 +16,7 @@ import './App.css';
 export default function App() {
   const dispatch = useAppDispatch();
   const { user, isAuthenticated } = useAppSelector((state) => state.auth);
+  const [authChecked, setAuthChecked] = useState(false);  
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
@@ -28,10 +30,15 @@ export default function App() {
       } else {
         dispatch(clearUser());
       }
+      setAuthChecked(true);
     });
 
     return () => unsubscribe();
   }, [dispatch]);
+
+  if (!authChecked) {
+    return <div className="loading">Loading...</div>;
+  }
 
   return (
     <BrowserRouter>
@@ -78,23 +85,29 @@ export default function App() {
           />
           <Route
             path="/coins"
-            element={isAuthenticated ? <CryptoList /> : <Navigate to="/login" />}
+            element={
+              <RequireAuth>
+                <CryptoList />
+              </RequireAuth>
+            }
           />
           <Route
             path="/favorites"
-            element={isAuthenticated ? <FavoritesPage /> : <Navigate to="/login" />}
+            element={
+              <RequireAuth>
+                <FavoritesPage />
+              </RequireAuth>
+            }
           />
-          <Route
+         <Route
             path="/coins/:id"
             element={
-              isAuthenticated ? (
+              <RequireAuth>
                 <>
-                  <CryptoDetails />
                   <CryptoChart />
+                  <CryptoDetails />
                 </>
-              ) : (
-                <Navigate to="/login" />
-              )
+              </RequireAuth>
             }
           />
           <Route
