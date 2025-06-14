@@ -4,7 +4,7 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { toggleFavoriteAndSync } from '../../redux/coins/favoritesThunks';
 import type { RootState } from '../../redux/store';
 import type { CoinDetails } from '../../types/coinTypes';
-import './CryptoDetails.css';
+import './CryptoDetails.scss';
 import { useTranslation } from 'react-i18next';
 import DOMPurify from 'dompurify';
 

@@ -1,52 +1,45 @@
+@import '../styles/variables';
+@import '../styles/mixins';
+
 .navbar {
   background-color: var(--color-nav-bg);
   padding: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
 
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 
-.nav-link {
-  color: var(--color-nav-text);
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  transition: background-color 0.3s;
-}
+    .nav-link {
+      color: var(--color-nav-text);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: background-color 0.3s;
 
-.nav-link:hover {
-  background-color: #333;
-}
+      &:hover {
+        background-color: $light-hover;
+      }
 
-.nav-link.active {
-  background-color: #444;
-}
+      &.active {
+        background-color: darken($light-hover, 15%);
+      }
+    }
 
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  color: var(--color-nav-text);
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: var(--color-nav-text);
+    }
+  }
 }
 
 .logout-button {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.logout-button:hover {
-  background-color: #c82333;
+  @include button($danger-color);
 }
 
 .content-container {
@@ -88,15 +81,15 @@
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.3s;
-}
 
-.lang-button:hover {
-  background-color: #333;
-}
+  &:hover {
+    background-color: $light-hover;
+  }
 
-.lang-button.active {
-  background-color: var(--color-nav-text);
-  color: var(--color-nav-bg);
+  &.active {
+    background-color: var(--color-nav-text);
+    color: var(--color-nav-bg);
+  }
 }
 
 .theme-toggle {
@@ -108,8 +101,8 @@
   cursor: pointer;
   margin-left: 1rem;
   transition: all 0.3s;
-}
 
-.theme-toggle:hover {
-  background-color: #333;
+  &:hover {
+    background-color: $light-hover;
+  }
 }

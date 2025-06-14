@@ -6,7 +6,7 @@ import { setUser } from '../../redux/User/authSlice';
 import { useNavigate, Link } from 'react-router-dom';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { useTranslation } from 'react-i18next';
-import './RegisterForm.css';
+import './RegisterForm.scss';
 
 const RegisterForm: React.FC = () => {
   const { t } = useTranslation();

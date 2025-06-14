@@ -1,6 +1,6 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import './CryptoChart.css';
+import './CryptoChart.scss';
 import type { CoinChart } from '../../types/coinTypes';
 import { useTranslation } from 'react-i18next';
 import i18n from '../../i18n';

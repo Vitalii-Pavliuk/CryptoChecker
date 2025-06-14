@@ -1,8 +1,14 @@
+@import '../../styles/variables';
+
 body {
   margin: 0;
   background: var(--color-bg);
   color: var(--color-text);
   font-family: sans-serif;
+
+  a {
+    color: $primary-color;
+  }
 }
 
 body.light {

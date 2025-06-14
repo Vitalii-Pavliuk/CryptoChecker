@@ -1,3 +1,5 @@
+@import '../../styles/variables';
+
 .search-bar {
   margin-bottom: 2rem;
   max-width: 600px;
@@ -11,19 +13,17 @@
   font-size: 1rem;
   border: 2px solid var(--color-input-border);
   border-radius: 8px;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
   background-color: var(--color-card-bg);
   color: var(--color-text);
-}
 
-.search-input:focus {
-  outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
-}
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+  }
 
-.search-input::placeholder {
-  color: #999;
+  &::placeholder {
+    color: #999;
+  }
 }

@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { auth } from '../../firebase/firebase';
 import { useTranslation } from 'react-i18next';
-import '../App.css';
+import '../App.scss';
 
 interface NavbarProps {
   isAuthenticated: boolean;

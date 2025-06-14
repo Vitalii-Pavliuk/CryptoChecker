@@ -1,0 +1,88 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.coin-card {
+  background: var(--color-card-bg);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .coin-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .coin-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    .coin-image {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+
+    .coin-header-info {
+      flex: 1;
+
+      .coin-name {
+        margin: 0;
+        font-size: 1.1rem;
+        color: var(--color-text);
+
+        .coin-symbol {
+          color: var(--color-text-secondary);
+          font-size: 0.9rem;
+          margin-left: 0.5rem;
+        }
+      }
+
+      .coin-rank {
+        margin: 0.25rem 0 0;
+        font-size: 0.9rem;
+        color: var(--color-text-secondary);
+      }
+    }
+  }
+
+  .coin-price {
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
+    color: var(--color-text);
+
+    .label {
+      color: var(--color-text-secondary);
+      margin-right: 0.5rem;
+    }
+  }
+
+  .coin-change {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  .favorite-button {
+    @include button(#ffd700, #000);
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    padding: 0.25rem;
+    background: none;
+    border: none;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}

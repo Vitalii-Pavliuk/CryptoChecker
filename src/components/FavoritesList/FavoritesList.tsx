@@ -5,7 +5,7 @@ import { FavoriteCoinItem } from '../FavoriteCoinItem/FavoriteCoinItem';
 import { useGetCoinsByIdsQuery } from '../../redux/services/coinGeckoApi';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { useTranslation } from 'react-i18next';
-import './FavoritesList.css';
+import './FavoritesList.scss';
 import { Loader } from '../Loader/Loader';
 
 const FavoritesList: React.FC = () => {
