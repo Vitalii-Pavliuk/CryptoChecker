@@ -1,4 +1,5 @@
-// Зміна тем 
+
+// Зміна тем
 // Переписати все на sass
 
 import { BrowserRouter, Routes, Route, NavLink, Navigate } from 'react-router-dom';
@@ -12,6 +13,8 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase/firebase';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { setUser, clearUser } from '../redux/User/authSlice';
+import { loadFavorites } from '../redux/coins/favoritesThunks';
+import { setFavorites } from '../redux/coins/favoritesSlice';
 import { useTranslation } from 'react-i18next';
 import './App.css';
 import CryptoDetailsPage from '../pages/CryptoDetailsPage';
@@ -35,8 +38,10 @@ export default function App() {
             uid: firebaseUser.uid,
           }),
         );
+        dispatch(loadFavorites(firebaseUser.uid));
       } else {
         dispatch(clearUser());
+        dispatch(setFavorites([]));
       }
       setAuthChecked(true);
     });
@@ -79,14 +84,14 @@ export default function App() {
             </>
           )}
           <div className="language-switcher">
-            <button 
-              onClick={() => changeLanguage('en')} 
+            <button
+              onClick={() => changeLanguage('en')}
               className={`lang-button ${i18n.language === 'en' ? 'active' : ''}`}
             >
               EN
             </button>
-            <button 
-              onClick={() => changeLanguage('uk')} 
+            <button
+              onClick={() => changeLanguage('uk')}
               className={`lang-button ${i18n.language === 'uk' ? 'active' : ''}`}
             >
               UA

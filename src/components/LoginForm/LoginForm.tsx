@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase/firebase';
 import { useDispatch } from 'react-redux';
+
 import { setUser } from '../../redux/User/authSlice';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { useTranslation } from 'react-i18next';
+import {useAppDispatch} from '../../hooks/hooks'
 import './LoginForm.css';
 
 const LoginForm: React.FC = () => {
@@ -14,7 +16,7 @@ const LoginForm: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const from = (location.state as { from?: { pathname: string } })?.from?.pathname || '/coins';

@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import type { ThunkDispatch, UnknownAction } from '@reduxjs/toolkit';
+import type { ThunkDispatch, ThunkAction, UnknownAction } from '@reduxjs/toolkit';
 import authReducer from './User/authSlice';
 import favoritesReducer from './coins/favoritesSlice';
 import { coinGeckoApi } from '../redux/services/coinGeckoApi';
@@ -17,3 +17,9 @@ export const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = ThunkDispatch<RootState, unknown, UnknownAction>;
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  UnknownAction
+>;

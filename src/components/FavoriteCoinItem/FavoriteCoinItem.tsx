@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../hooks/hooks';
-import { toggleFavorite } from '../../redux/coins/favoritesSlice';
+import { toggleFavoriteAndSync } from '../../redux/coins/favoritesThunks';
 import type { RootState } from '../../redux/store';
 import type { Coin } from '../../types/coinTypes';
 import { useTranslation } from 'react-i18next';
@@ -21,7 +21,7 @@ const FavoriteCoinItem: React.FC<FavoriteCoinItemProps> = ({ coin }) => {
   const isFavorite = favoriteCoins.includes(coin.id);
 
   const handleToggleFavorite = () => {
-    dispatch(toggleFavorite(coin.id));
+    dispatch(toggleFavoriteAndSync(coin.id));
   };
 
   return (
@@ -32,8 +32,12 @@ const FavoriteCoinItem: React.FC<FavoriteCoinItemProps> = ({ coin }) => {
           <h2>
             {coin.name} ({coin.symbol.toUpperCase()})
           </h2>
-          <p>{t('coin.currentPrice')}: ${coin.current_price.toLocaleString(i18n.language)}</p>
-          <p>24h {t('coin.change')}: {coin.price_change_percentage_24h.toFixed(2)}%</p>
+          <p>
+            {t('coin.currentPrice')}: ${coin.current_price.toLocaleString(i18n.language)}
+          </p>
+          <p>
+            24h {t('coin.change')}: {coin.price_change_percentage_24h.toFixed(2)}%
+          </p>
         </div>
       </Link>
       <button

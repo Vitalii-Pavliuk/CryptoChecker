@@ -2,11 +2,12 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { Coin } from '../../types/coinTypes';
 import CoinCard from '../CoinCard/CoinCard';
-import { toggleFavorite } from '../../redux/coins/favoritesSlice';
+import { toggleFavoriteAndSync } from '../../redux/coins/favoritesThunks';
 import type { RootState } from '../../redux/store';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { Loader } from '../Loader/Loader';
 import { useTranslation } from 'react-i18next';
+import {useAppDispatch} from '../../hooks/hooks'
 
 interface TopCryptoListProps {
   coins: Coin[];
@@ -24,12 +25,12 @@ const TopCryptoList: React.FC<TopCryptoListProps> = ({
   onLoadMore,
 }) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const favoriteCoins = useSelector((state: RootState) => state.favorites.favoriteCoins);
 
   const isFavorite = (coinId: string) => favoriteCoins.includes(coinId);
   const handleToggleFavorite = (coinId: string) => {
-    dispatch(toggleFavorite(coinId));
+    dispatch(toggleFavoriteAndSync(coinId));
   };
 
   return (

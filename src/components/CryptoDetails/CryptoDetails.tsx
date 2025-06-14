@@ -2,7 +2,8 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetCoinDetailsQuery } from '../../redux/services/coinGeckoApi';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleFavorite } from '../../redux/coins/favoritesSlice';
+import {useAppDispatch} from '../../hooks/hooks'
+import { toggleFavoriteAndSync } from '../../redux/coins/favoritesThunks';
 import type { RootState } from '../../redux/store';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import './CryptoDetails.css';
@@ -14,13 +15,13 @@ const CryptoDetails: React.FC = () => {
   const { t, i18n } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const { data: coin, isLoading, isError, error } = useGetCoinDetailsQuery(id ?? '', { skip: !id });
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const favoriteCoins = useSelector((state: RootState) => state.favorites.favoriteCoins);
 
   const isFavorite = id ? favoriteCoins.includes(id) : false;
   const handleToggleFavorite = () => {
     if (id) {
-      dispatch(toggleFavorite(id));
+      dispatch(toggleFavoriteAndSync(id));
     }
   };
 
@@ -38,8 +39,8 @@ const CryptoDetails: React.FC = () => {
           <button
             onClick={handleToggleFavorite}
             className="favorite-button"
-             title={isFavorite ? t('favorites.remove') : t('favorites.add')}
-             >
+            title={isFavorite ? t('favorites.remove') : t('favorites.add')}
+          >
             {isFavorite ? '★' : '☆'}
           </button>
         </div>
@@ -48,11 +49,15 @@ const CryptoDetails: React.FC = () => {
       <div className="coin-stats">
         <div className="stat-card">
           <h3>{t('coin.currentPrice')}</h3>
-          <p className="stat-value">${coin.market_data.current_price.usd.toLocaleString(i18n.language)}</p>
+          <p className="stat-value">
+            ${coin.market_data.current_price.usd.toLocaleString(i18n.language)}
+          </p>
         </div>
         <div className="stat-card">
           <h3>{t('coin.marketCap')}</h3>
-          <p className="stat-value">${coin.market_data.market_cap.usd.toLocaleString(i18n.language)}</p>
+          <p className="stat-value">
+            ${coin.market_data.market_cap.usd.toLocaleString(i18n.language)}
+          </p>
         </div>
         <div className="stat-card">
           <h3>{t('coin.change24h')}</h3>
@@ -69,10 +74,12 @@ const CryptoDetails: React.FC = () => {
       </div>
 
       <div className="coin-description">
-        <h2>{t('coin.about')} {coin.name}</h2>
+        <h2>
+          {t('coin.about')} {coin.name}
+        </h2>
         <div
           className="description-content"
-                    dangerouslySetInnerHTML={{
+          dangerouslySetInnerHTML={{
             __html: coin.description[i18n.language] || coin.description.en,
           }}
         />
