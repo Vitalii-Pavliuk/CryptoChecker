@@ -1,5 +1,5 @@
 .coin-card {
-  background: #fff;
+  background: var(--color-card-bg);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 1rem;
@@ -39,11 +39,11 @@
 .coin-name {
   margin: 0;
   font-size: 1.1rem;
-  color: #333;
+  color: var(--color-text);
 }
 
 .coin-symbol {
-  color: #666;
+  color: var(--color-text-secondary);
   font-size: 0.9rem;
   margin-left: 0.5rem;
 }
@@ -51,17 +51,17 @@
 .coin-rank {
   margin: 0.25rem 0 0;
   font-size: 0.9rem;
-  color: #666;
+  color: var(--color-text-secondary);
 }
 
 .coin-price {
   margin: 0.5rem 0;
   font-size: 1.2rem;
-  color: #333;
+  color: var(--color-text);
 }
 
 .coin-price .label {
-  color: #666;
+  color: var(--color-text-secondary);
   margin-right: 0.5rem;
 }
 

@@ -1,7 +1,4 @@
 
-// Зміна тем
-// Переписати все на sass
-
 import { BrowserRouter, Routes, Route, NavLink, Navigate } from 'react-router-dom';
 import RequireAuth from './RequireAuth';
 import { RegisterPage } from '../pages/RegisterPage';
@@ -18,9 +15,11 @@ import { setFavorites } from '../redux/coins/favoritesSlice';
 import { useTranslation } from 'react-i18next';
 import './App.css';
 import CryptoDetailsPage from '../pages/CryptoDetailsPage';
+import { useTheme } from './UI/ThemeContext';
 
 export default function App() {
   const { t, i18n } = useTranslation();
+  const { theme, toggleTheme } = useTheme();
   const dispatch = useAppDispatch();
   const { user, isAuthenticated } = useAppSelector((state) => state.auth);
   const [authChecked, setAuthChecked] = useState(false);
@@ -97,6 +96,9 @@ export default function App() {
               UA
             </button>
           </div>
+            <button onClick={toggleTheme} className="theme-toggle">
+            {theme === 'light' ? 'Dark' : 'Light'}
+          </button>
         </div>
       </nav>
 

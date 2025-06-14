@@ -7,6 +7,6 @@
 .no-favorites {
   text-align: center;
   padding: 2rem;
-  color: #666;
+  color: var(--color-text-secondary);
   font-size: 1.1rem;
 }

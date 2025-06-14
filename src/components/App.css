@@ -1,5 +1,5 @@
 .navbar {
-  background-color: #1a1a1a;
+  background-color: var(--color-nav-bg);
   padding: 1rem;
   display: flex;
   justify-content: space-between;
@@ -13,7 +13,7 @@
 }
 
 .nav-link {
-  color: #fff;
+  color: var(--color-nav-text);
   text-decoration: none;
   padding: 0.5rem 1rem;
   border-radius: 4px;
@@ -32,7 +32,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  color: #fff;
+  color: var(--color-nav-text);
 }
 
 .logout-button {
@@ -56,8 +56,8 @@
 }
 
 .footer {
-  background-color: #1a1a1a;
-  color: #fff;
+  background-color: var(--color-nav-bg);
+  color: var(--color-nav-text);
   text-align: center;
   padding: 1rem;
   position: fixed;
@@ -71,7 +71,7 @@
   align-items: center;
   height: 100vh;
   font-size: 1.2rem;
-  color: #666;
+  color: var(--color-text-secondary);
 }
 
 .language-switcher {
@@ -82,8 +82,8 @@
 
 .lang-button {
   background-color: transparent;
-  color: #fff;
-  border: 1px solid #fff;
+  color: var(--color-nav-text);
+  border: 1px solid var(--color-nav-text);
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   cursor: pointer;
@@ -95,6 +95,21 @@
 }
 
 .lang-button.active {
-  background-color: #fff;
-  color: #1a1a1a;
+  background-color: var(--color-nav-text);
+  color: var(--color-nav-bg);
+}
+
+.theme-toggle {
+  background-color: transparent;
+  border: 1px solid var(--color-nav-text);
+  color: var(--color-nav-text);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 1rem;
+  transition: all 0.3s;
+}
+
+.theme-toggle:hover {
+  background-color: #333;
 }
