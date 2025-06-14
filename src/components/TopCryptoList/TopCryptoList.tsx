@@ -6,6 +6,7 @@ import { toggleFavorite } from '../../redux/coins/favoritesSlice';
 import type { RootState } from '../../redux/store';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { Loader } from '../Loader/Loader';
+import { useTranslation } from 'react-i18next';
 
 interface TopCryptoListProps {
   coins: Coin[];
@@ -22,6 +23,7 @@ const TopCryptoList: React.FC<TopCryptoListProps> = ({
   hasMore,
   onLoadMore,
 }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const favoriteCoins = useSelector((state: RootState) => state.favorites.favoriteCoins);
 
@@ -57,7 +59,7 @@ const TopCryptoList: React.FC<TopCryptoListProps> = ({
           {hasMore && (
             <div className="load-more-container">
               <button onClick={onLoadMore} disabled={isLoading} className="load-more-button">
-                {isLoading ? <Loader /> : 'Load More'}
+                {isLoading ? <Loader /> : t('list.loadMore')}
               </button>
             </div>
           )}

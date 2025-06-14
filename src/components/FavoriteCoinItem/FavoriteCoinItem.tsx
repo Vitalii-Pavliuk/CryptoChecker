@@ -5,6 +5,7 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { toggleFavorite } from '../../redux/coins/favoritesSlice';
 import type { RootState } from '../../redux/store';
 import type { Coin } from '../../types/coinTypes';
+import { useTranslation } from 'react-i18next';
 import './FavoriteCoinItem.css';
 
 interface FavoriteCoinItemProps {
@@ -12,6 +13,7 @@ interface FavoriteCoinItemProps {
 }
 
 const FavoriteCoinItem: React.FC<FavoriteCoinItemProps> = ({ coin }) => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const favoriteCoins = useSelector((state: RootState) => state.favorites.favoriteCoins);
 
@@ -29,14 +31,14 @@ const FavoriteCoinItem: React.FC<FavoriteCoinItemProps> = ({ coin }) => {
           <h2>
             {coin.name} ({coin.symbol.toUpperCase()})
           </h2>
-          <p>Price: ${coin.current_price.toLocaleString()}</p>
-          <p>24h Change {coin.price_change_percentage_24h.toFixed(2)}%</p>
+          <p>{t('coin.currentPrice')}: ${coin.current_price.toLocaleString()}</p>
+          <p>24h {t('coin.change')}: {coin.price_change_percentage_24h.toFixed(2)}%</p>
         </div>
       </Link>
       <button
         onClick={handleToggleFavorite}
         className="favorite-button"
-        title={isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
+        title={isFavorite ? t('favorites.remove') : t('favorites.add')}
       >
         {isFavorite ? '★' : '☆'}
       </button>

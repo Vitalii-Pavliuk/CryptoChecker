@@ -3,12 +3,14 @@ import CoinCard from '../CoinCard/CoinCard';
 import { useSearchCoinsQuery } from '../../redux/services/coinGeckoApi';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { Loader } from '../Loader/Loader';
+import { useTranslation } from 'react-i18next';
 
 interface SearchResultsProps {
   query: string;
 }
 
 const SearchResults: React.FC<SearchResultsProps> = ({ query }) => {
+  const { t } = useTranslation();
   const {
     data: results = [],
     isLoading,
@@ -39,7 +41,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query }) => {
         </div>
       ) : (
         !isLoading &&
-        query !== '' && <div className="no-results">No cryptocurrencies found for "{query}"</div>
+        query !== '' && <div className="no-results">{t('list.noResults', { query })}</div>
       )}
     </div>
   );

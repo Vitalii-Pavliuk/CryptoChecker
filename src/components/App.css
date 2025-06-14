@@ -1,16 +1,15 @@
 .navbar {
   background-color: #1a1a1a;
   padding: 1rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .nav-links {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+  gap: 1rem;
 }
 
 .nav-link {
@@ -18,7 +17,7 @@
   text-decoration: none;
   padding: 0.5rem 1rem;
   border-radius: 4px;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.3s;
 }
 
 .nav-link:hover {
@@ -43,7 +42,7 @@
   padding: 0.5rem 1rem;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.3s;
 }
 
 .logout-button:hover {
@@ -51,20 +50,51 @@
 }
 
 .content-container {
+  padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 1rem;
 }
 
 .footer {
   background-color: #1a1a1a;
   color: #fff;
   text-align: center;
-  padding: 1rem 0;
-  position: relative;
+  padding: 1rem;
+  position: fixed;
   bottom: 0;
   width: 100%;
-  font-size: 1rem;
-  letter-spacing: 0.5px;
-  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.language-switcher {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: 1rem;
+}
+
+.lang-button {
+  background-color: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.lang-button:hover {
+  background-color: #333;
+}
+
+.lang-button.active {
+  background-color: #fff;
+  color: #1a1a1a;
 }

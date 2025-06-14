@@ -1,0 +1,70 @@
+{
+  "navbar": {
+    "register": "Register",
+    "login": "Login",
+    "coins": "Coins",
+    "favorites": "Favorites",
+    "logout": "Logout"
+  },
+  "footer": {
+    "copyright": "© 2024 CryptoChecker. All rights reserved."
+  },
+  "common": {
+    "loading": "Loading..."
+  },
+  "auth": {
+    "createAccount": "Create Account",
+    "signIn": "Sign In",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "login": "Login",
+    "register": "Register",
+    "creating": "Creating Account...",
+    "loggingIn": "Logging in...",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?",
+    "emailPlaceholder": "Enter your email",
+    "passwordPlaceholder": "Enter your password",
+    "createPasswordPlaceholder": "Create a password",
+    "confirmPasswordPlaceholder": "Confirm your password",
+    "loginError": "Failed to sign in. Please check your credentials.",
+    "registerError": "Failed to create account. Please try again.",
+    "passwordsDoNotMatch": "Passwords do not match"
+  },
+  "list": {
+    "searchResults": "Search Results",
+    "topCryptocurrencies": "Top Cryptocurrencies",
+    "loadMore": "Load More",
+    "noResults": "No cryptocurrencies found for \"{{query}}\""
+  },
+  "search": {
+    "placeholder": "Search cryptocurrencies..."
+  },
+  "favorites": {
+    "title": "Your Favorite Cryptocurrencies",
+    "none": "No favorite coins added yet.",
+    "add": "Add to Favorites",
+    "remove": "Remove from Favorites"
+  },
+  "coin": {
+    "noData": "No coin data available",
+    "noChart": "No Chart available",
+    "currentPrice": "Price",
+    "marketCap": "Market Cap",
+    "change24h": "24h Change",
+    "about": "About",
+    "officialLinks": "Official Links",
+    "rank": "Rank: #{{rank}}",
+    "change": "Change"
+  },
+  "errors": {
+    "unknown": "Unknown error",
+    "tooManyRequests": "Too many requests! Please try again later",
+    "fetchError": "Failed to execute request",
+    "fetchErrorWithDetails": "Failed to execute request. Too many requests or network issue.",
+    "requestFailedWithCode": "Request failed with code {{code}}",
+    "errorWithStatus": "Error: {{status}}",
+    "unexpected": "Unexpected error"
+  }
+}

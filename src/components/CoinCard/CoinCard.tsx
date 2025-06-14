@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import './CoinCard.css';
 
 interface CoinCardProps {
@@ -28,45 +29,49 @@ const CoinCard: React.FC<CoinCardProps> = ({
   onToggleFavorite,
   showFavoriteButton = false,
   to,
-}) => (
-  <div className="coin-card">
-    <Link to={to} className="coin-link">
-      <div className="coin-header">
-        <img src={image} alt={name} className="coin-image" />
-        <div className="coin-header-info">
-          <h3 className="coin-name">
-            {name}
-            <span className="coin-symbol">({symbol.toUpperCase()})</span>
-          </h3>
-          {rank && <p className="coin-rank">Rank: #{rank}</p>}
+}) => {
+  const { t } = useTranslation();
+
+  return (
+    <div className="coin-card">
+      <Link to={to} className="coin-link">
+        <div className="coin-header">
+          <img src={image} alt={name} className="coin-image" />
+          <div className="coin-header-info">
+            <h3 className="coin-name">
+              {name}
+              <span className="coin-symbol">({symbol.toUpperCase()})</span>
+            </h3>
+            {rank && <p className="coin-rank">{t('coin.rank', { rank })}</p>}
+          </div>
         </div>
-      </div>
-      {price !== undefined && (
-        <p className="coin-price">
-          <span className="label">Price:</span>
-          <span className="value">${price.toLocaleString()}</span>
-        </p>
-      )}
-      {change24h !== undefined && (
-        <p
-          className="coin-change"
-          style={{ color: change24h > 0 ? 'green' : 'red', fontWeight: 'bold' }}
+        {price !== undefined && (
+          <p className="coin-price">
+            <span className="label">{t('coin.currentPrice')}:</span>
+            <span className="value">${price.toLocaleString()}</span>
+          </p>
+        )}
+        {change24h !== undefined && (
+          <p
+            className="coin-change"
+            style={{ color: change24h > 0 ? 'green' : 'red', fontWeight: 'bold' }}
+          >
+            {change24h > 0 ? '+' : ''}
+            {change24h.toFixed(2)}%
+          </p>
+        )}
+      </Link>
+      {showFavoriteButton && onToggleFavorite && (
+        <button
+          onClick={() => onToggleFavorite(id)}
+          className="favorite-button"
+          title={isFavorite ? t('favorites.remove') : t('favorites.add')}
         >
-          {change24h > 0 ? '+' : ''}
-          {change24h.toFixed(2)}%
-        </p>
+          {isFavorite ? '★' : '☆'}
+        </button>
       )}
-    </Link>
-    {showFavoriteButton && onToggleFavorite && (
-      <button
-        onClick={() => onToggleFavorite(id)}
-        className="favorite-button"
-        title={isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
-      >
-        {isFavorite ? '★' : '☆'}
-      </button>
-    )}
-  </div>
-);
+    </div>
+  );
+};
 
 export default CoinCard;

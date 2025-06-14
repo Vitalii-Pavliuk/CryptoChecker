@@ -5,6 +5,7 @@ import { useLazyGetCoinChartQuery } from '../../redux/services/coinGeckoApi';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import './CryptoChart.css';
 import { Loader } from '../Loader/Loader';
+import { useTranslation } from 'react-i18next';
 
 const periods = {
   '1D': 1,
@@ -17,6 +18,8 @@ const periods = {
 const defaultDays = 7;
 
 const CryptoChart: React.FC = () => {
+  const { t } = useTranslation();
+
   const { id } = useParams<{ id: string }>();
   const [selectedPeriod, setSelectedPeriod] = React.useState(defaultDays);
 
@@ -59,7 +62,7 @@ const CryptoChart: React.FC = () => {
           <XAxis dataKey="time" minTickGap={20} />
           <YAxis domain={['auto', 'auto']} />
           <Tooltip
-            formatter={(value) => [`$${Number(value).toFixed(2)}`, 'Price']}
+            formatter={(value) => [`$${Number(value).toFixed(2)}`, t('coin.currentPrice')]}
             labelStyle={{ color: '#333', fontWeight: 'bold' }}
           />
           <Line

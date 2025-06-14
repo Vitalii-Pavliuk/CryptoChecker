@@ -5,9 +5,11 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/User/authSlice';
 import { useNavigate, Link } from 'react-router-dom';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
+import { useTranslation } from 'react-i18next';
 import './RegisterForm.css';
 
 const RegisterForm: React.FC = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -21,7 +23,7 @@ const RegisterForm: React.FC = () => {
     setError('');
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError(t('auth.passwordsDoNotMatch'));
       return;
     }
 
@@ -37,9 +39,9 @@ const RegisterForm: React.FC = () => {
       navigate('/coins');
     } catch (error: unknown) {
       if (error instanceof Error) {
-        setError(error.message || 'Failed to create account. Please try again.');
+        setError(error.message || t('auth.registerError'));
       } else {
-        setError('Failed to create account. Please try again.');
+        setError(t('auth.registerError'));
       }
     } finally {
       setIsLoading(false);
@@ -48,11 +50,11 @@ const RegisterForm: React.FC = () => {
 
   return (
     <form className="register-form" onSubmit={handleRegister}>
-      <h2 className="form-title">Create Account</h2>
+      <h2 className="form-title">{t('auth.createAccount')}</h2>
 
       <div className="form-group">
         <label className="form-label" htmlFor="email">
-          Email
+          {t('auth.email')}
         </label>
         <input
           id="email"
@@ -61,13 +63,13 @@ const RegisterForm: React.FC = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          placeholder="Enter your email"
+          placeholder={t('auth.emailPlaceholder')}
         />
       </div>
 
       <div className="form-group">
         <label className="form-label" htmlFor="password">
-          Password
+          {t('auth.password')}
         </label>
         <input
           id="password"
@@ -76,14 +78,14 @@ const RegisterForm: React.FC = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          placeholder="Create a password"
+          placeholder={t('auth.createPasswordPlaceholder')}
           minLength={6}
         />
       </div>
 
       <div className="form-group">
         <label className="form-label" htmlFor="confirmPassword">
-          Confirm Password
+          {t('auth.confirmPassword')}
         </label>
         <input
           id="confirmPassword"
@@ -92,7 +94,7 @@ const RegisterForm: React.FC = () => {
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
-          placeholder="Confirm your password"
+          placeholder={t('auth.confirmPasswordPlaceholder')}
           minLength={6}
         />
       </div>
@@ -100,11 +102,11 @@ const RegisterForm: React.FC = () => {
       {error && <ErrorMessage error={{ message: error }} />}
 
       <button type="submit" className="submit-button" disabled={isLoading}>
-        {isLoading ? 'Creating Account...' : 'Register'}
+        {isLoading ? t('auth.creating') : t('auth.register')}
       </button>
 
       <div className="form-footer">
-        Already have an account? <Link to="/login">Login</Link>
+        {t('auth.alreadyHaveAccount')} <Link to="/login">{t('auth.login')}</Link>
       </div>
     </form>
   );

@@ -4,8 +4,10 @@ import TopCryptoList from '../TopCryptoList/TopCryptoList';
 import SearchResults from '../SearchResults/SearchResults';
 import { useGetCoinsQuery } from '../../redux/services/coinGeckoApi';
 import type { Coin } from '../../types/coinTypes';
+import { useTranslation } from 'react-i18next';
 
 const CryptoList: React.FC = () => {
+  const { t } = useTranslation();
   const [page, setPage] = useState(1);
   const [coins, setCoins] = useState<Coin[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -35,7 +37,9 @@ const CryptoList: React.FC = () => {
 
   return (
     <div className="crypto-list">
-      <h1 className="list-header">{searchQuery ? 'Search Results' : 'Top Cryptocurrencies'}</h1>
+      <h1 className="list-header">
+        {searchQuery ? t('list.searchResults') : t('list.topCryptocurrencies')}
+      </h1>
       <SearchBar onSearchQueryChange={setSearchQuery} />
 
       {searchQuery ? (

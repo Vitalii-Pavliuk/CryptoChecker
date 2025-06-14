@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import './SearchBar.css';
 
 interface SearchBarProps {
@@ -6,6 +7,7 @@ interface SearchBarProps {
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearchQueryChange }) => {
+  const { t } = useTranslation();
   const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
@@ -25,7 +27,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearchQueryChange }) => {
       <div className="search-form">
         <input
           type="text"
-          placeholder="Search cryptocurrencies..."
+          placeholder={t('search.placeholder')}
           value={inputValue}
           onChange={handleChange}
           className="search-input"

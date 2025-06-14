@@ -7,8 +7,10 @@ import type { RootState } from '../../redux/store';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import './CryptoDetails.css';
 import { Loader } from '../Loader/Loader';
+import { useTranslation } from 'react-i18next';
 
 const CryptoDetails: React.FC = () => {
+    const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const { data: coin, isLoading, isError, error } = useGetCoinDetailsQuery(id ?? '', { skip: !id });
   const dispatch = useDispatch();
@@ -44,15 +46,15 @@ const CryptoDetails: React.FC = () => {
 
       <div className="coin-stats">
         <div className="stat-card">
-          <h3>Current Price</h3>
+          <h3>{t('coin.currentPrice')}</h3>
           <p className="stat-value">${coin.market_data.current_price.usd.toLocaleString()}</p>
         </div>
         <div className="stat-card">
-          <h3>Market Cap</h3>
+          <h3>{t('coin.marketCap')}</h3>
           <p className="stat-value">${coin.market_data.market_cap.usd.toLocaleString()}</p>
         </div>
         <div className="stat-card">
-          <h3>24h Change</h3>
+          <h3>{t('coin.change24h')}</h3>
           <p
             className="stat-value"
             style={{
@@ -66,7 +68,7 @@ const CryptoDetails: React.FC = () => {
       </div>
 
       <div className="coin-description">
-        <h2>About {coin.name}</h2>
+        <h2>{t('coin.about')} {coin.name}</h2>
         <div
           className="description-content"
           dangerouslySetInnerHTML={{ __html: coin.description.en }}
@@ -74,7 +76,7 @@ const CryptoDetails: React.FC = () => {
       </div>
 
       <div className="coin-links">
-        <h2>Official Links</h2>
+        <h2>{t('coin.officialLinks')}</h2>
         <ul>
           {coin.links.homepage
             .filter((link) => link)

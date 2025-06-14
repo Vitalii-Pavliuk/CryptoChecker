@@ -5,9 +5,11 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/User/authSlice';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
+import { useTranslation } from 'react-i18next';
 import './LoginForm.css';
 
 const LoginForm: React.FC = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -32,9 +34,9 @@ const LoginForm: React.FC = () => {
       navigate(from, { replace: true });
     } catch (error: unknown) {
       if (error instanceof Error) {
-        setError(error.message || 'Failed to sign in. Please check your credentials.');
+        setError(error.message || t('auth.loginError'));
       } else {
-        setError('Failed to sign in. Please check your credentials.');
+        setError(t('auth.loginError'));
       }
     } finally {
       setIsLoading(false);
@@ -42,11 +44,11 @@ const LoginForm: React.FC = () => {
   };
   return (
     <form className="login-form" onSubmit={handleLogin}>
-      <h2 className="form-title">Login</h2>
+      <h2 className="form-title">{t('auth.signIn')}</h2>
 
       <div className="form-group">
         <label className="form-label" htmlFor="email">
-          Email
+          {t('auth.email')}
         </label>
         <input
           id="email"
@@ -55,13 +57,13 @@ const LoginForm: React.FC = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          placeholder="Enter your email"
+          placeholder={t('auth.emailPlaceholder')}
         />
       </div>
 
       <div className="form-group">
         <label className="form-label" htmlFor="password">
-          Password
+          {t('auth.password')}
         </label>
         <input
           id="password"
@@ -70,18 +72,18 @@ const LoginForm: React.FC = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          placeholder="Enter your password"
+          placeholder={t('auth.passwordPlaceholder')}
         />
       </div>
 
       {error && <ErrorMessage error={{ message: error }} />}
 
       <button type="submit" className="submit-button" disabled={isLoading}>
-        {isLoading ? 'Logging in...' : 'Login'}
+        {isLoading ? t('auth.loggingIn') : t('auth.login')}
       </button>
 
       <div className="form-footer">
-        Don't have an account? <Link to="/register">Register</Link>
+        {t('auth.dontHaveAccount')} <Link to="/register">{t('auth.register')}</Link>
       </div>
     </form>
   );

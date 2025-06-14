@@ -1,0 +1,70 @@
+{
+  "navbar": {
+    "register": "Реєстрація",
+    "login": "Вхід",
+    "coins": "Монети",
+    "favorites": "Обране",
+    "logout": "Вийти"
+  },
+  "footer": {
+    "copyright": "© 2024 CryptoChecker. Усі права захищені."
+  },
+  "common": {
+    "loading": "Завантаження..."
+  },
+  "auth": {
+    "createAccount": "Створити акаунт",
+    "signIn": "Увійти",
+    "email": "Електронна пошта",
+    "password": "Пароль",
+    "confirmPassword": "Підтвердіть пароль",
+    "login": "Увійти",
+    "register": "Зареєструватися",
+    "creating": "Створення акаунта...",
+    "loggingIn": "Вхід...",
+    "alreadyHaveAccount": "Вже маєте акаунт?",
+    "dontHaveAccount": "Немає акаунта?",
+    "emailPlaceholder": "Введіть вашу електронну пошту",
+    "passwordPlaceholder": "Введіть ваш пароль",
+    "createPasswordPlaceholder": "Створіть пароль",
+    "confirmPasswordPlaceholder": "Підтвердіть ваш пароль",
+    "loginError": "Помилка входу. Перевірте ваші облікові дані.",
+    "registerError": "Помилка створення акаунта. Спробуйте ще раз.",
+    "passwordsDoNotMatch": "Паролі не співпадають"
+  },
+  "list": {
+    "searchResults": "Результати пошуку",
+    "topCryptocurrencies": "Найпопулярніші криптовалюти",
+    "loadMore": "Завантажити більше",
+    "noResults": "Не знайдено криптовалют за запитом \"{{query}}\""
+  },
+  "search": {
+    "placeholder": "Пошук криптовалют..."
+  },
+  "favorites": {
+    "title": "Ваші улюблені криптовалюти",
+    "none": "Список обраних порожній.",
+    "add": "Додати в обране",
+    "remove": "Видалити з обраного"
+  },
+  "coin": {
+    "noData": "Даних про монету немає",
+    "noChart": "Немає даних для графіка",
+    "currentPrice": "Ціна",
+    "marketCap": "Ринкова капіталізація",
+    "change24h": "Зміна за 24г",
+    "about": "Про",
+    "officialLinks": "Офіційні посилання",
+    "rank": "Ранг: #{{rank}}",
+    "change": "Зміна"
+  },
+  "errors": {
+    "unknown": "Невідома помилка",
+    "tooManyRequests": "Забагато запитів! Спробуйте пізніше",
+    "fetchError": "Не вдалося виконати запит",
+    "fetchErrorWithDetails": "Не вдалося виконати запит. Можливо, забагато запитів або проблема з мережею.",
+    "requestFailedWithCode": "Запит завершився з кодом {{code}}",
+    "errorWithStatus": "Помилка: {{status}}",
+    "unexpected": "Несподівана помилка"
+  }
+}
