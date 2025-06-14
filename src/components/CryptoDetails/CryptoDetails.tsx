@@ -8,9 +8,10 @@ import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import './CryptoDetails.css';
 import { Loader } from '../Loader/Loader';
 import { useTranslation } from 'react-i18next';
+import i18n from '../../i18n';
 
 const CryptoDetails: React.FC = () => {
-    const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const { data: coin, isLoading, isError, error } = useGetCoinDetailsQuery(id ?? '', { skip: !id });
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const CryptoDetails: React.FC = () => {
 
   if (isLoading) return <Loader />;
   if (isError) return <ErrorMessage error={error} />;
-  if (!coin) return <div className="no-data">No coin data available</div>;
+  if (!coin) return <div className="no-data">{t('coin.noData')}</div>;
   return (
     <div className="coin-details-page">
       <div className="coin-header">
@@ -37,8 +38,8 @@ const CryptoDetails: React.FC = () => {
           <button
             onClick={handleToggleFavorite}
             className="favorite-button"
-            title={isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
-          >
+             title={isFavorite ? t('favorites.remove') : t('favorites.add')}
+             >
             {isFavorite ? '★' : '☆'}
           </button>
         </div>
@@ -47,11 +48,11 @@ const CryptoDetails: React.FC = () => {
       <div className="coin-stats">
         <div className="stat-card">
           <h3>{t('coin.currentPrice')}</h3>
-          <p className="stat-value">${coin.market_data.current_price.usd.toLocaleString()}</p>
+          <p className="stat-value">${coin.market_data.current_price.usd.toLocaleString(i18n.language)}</p>
         </div>
         <div className="stat-card">
           <h3>{t('coin.marketCap')}</h3>
-          <p className="stat-value">${coin.market_data.market_cap.usd.toLocaleString()}</p>
+          <p className="stat-value">${coin.market_data.market_cap.usd.toLocaleString(i18n.language)}</p>
         </div>
         <div className="stat-card">
           <h3>{t('coin.change24h')}</h3>
@@ -71,7 +72,9 @@ const CryptoDetails: React.FC = () => {
         <h2>{t('coin.about')} {coin.name}</h2>
         <div
           className="description-content"
-          dangerouslySetInnerHTML={{ __html: coin.description.en }}
+                    dangerouslySetInnerHTML={{
+            __html: coin.description[i18n.language] || coin.description.en,
+          }}
         />
       </div>
 

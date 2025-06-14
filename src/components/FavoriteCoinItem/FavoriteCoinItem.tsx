@@ -7,6 +7,7 @@ import type { RootState } from '../../redux/store';
 import type { Coin } from '../../types/coinTypes';
 import { useTranslation } from 'react-i18next';
 import './FavoriteCoinItem.css';
+import i18n from '../../i18n';
 
 interface FavoriteCoinItemProps {
   coin: Coin;
@@ -31,7 +32,7 @@ const FavoriteCoinItem: React.FC<FavoriteCoinItemProps> = ({ coin }) => {
           <h2>
             {coin.name} ({coin.symbol.toUpperCase()})
           </h2>
-          <p>{t('coin.currentPrice')}: ${coin.current_price.toLocaleString()}</p>
+          <p>{t('coin.currentPrice')}: ${coin.current_price.toLocaleString(i18n.language)}</p>
           <p>24h {t('coin.change')}: {coin.price_change_percentage_24h.toFixed(2)}%</p>
         </div>
       </Link>

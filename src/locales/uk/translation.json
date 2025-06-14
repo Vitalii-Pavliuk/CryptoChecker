@@ -9,8 +9,9 @@
   "footer": {
     "copyright": "© 2024 CryptoChecker. Усі права захищені."
   },
-  "common": {
-    "loading": "Завантаження..."
+"common": {
+    "loading": "Завантаження...",
+    "noData": "Немає даних"
   },
   "auth": {
     "createAccount": "Створити акаунт",

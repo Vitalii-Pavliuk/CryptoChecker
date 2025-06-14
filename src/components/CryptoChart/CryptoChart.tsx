@@ -6,6 +6,7 @@ import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import './CryptoChart.css';
 import { Loader } from '../Loader/Loader';
 import { useTranslation } from 'react-i18next';
+import i18n from '../../i18n';
 
 const periods = {
   '1D': 1,
@@ -33,21 +34,21 @@ const CryptoChart: React.FC = () => {
 
   if (isLoading) return <Loader />;
   if (isError) return <ErrorMessage error={error} />;
-  if (!coin || !coin.prices) return <div className="no-data">No Chart available</div>;
+ if (!coin || !coin.prices) return <div className="no-data">{t('coin.noChart')}</div>;
 
   const formatTime = (timestamp: number) => {
     const date = new Date(timestamp);
     if (selectedPeriod === 1) {
-      return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      return date.toLocaleTimeString(i18n.language, { hour: '2-digit', minute: '2-digit' });
     }
     if (selectedPeriod === 7) {
       return (
-        date.toLocaleDateString([], { day: '2-digit', month: '2-digit' }) +
+        date.toLocaleDateString(i18n.language, { day: '2-digit', month: '2-digit' }) +
         ' ' +
-        date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        date.toLocaleTimeString(i18n.language, { hour: '2-digit', minute: '2-digit' })
       );
     }
-    return date.toLocaleDateString();
+    return date.toLocaleDateString(i18n.language);
   };
 
   const chartData = coin.prices.map(([timestamp, price]) => ({

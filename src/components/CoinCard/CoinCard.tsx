@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './CoinCard.css';
+import i18n from '../../i18n';
 
 interface CoinCardProps {
   id: string;
@@ -48,7 +49,7 @@ const CoinCard: React.FC<CoinCardProps> = ({
         {price !== undefined && (
           <p className="coin-price">
             <span className="label">{t('coin.currentPrice')}:</span>
-            <span className="value">${price.toLocaleString()}</span>
+            <span className="value">${price.toLocaleString(i18n.language)}</span>
           </p>
         )}
         {change24h !== undefined && (

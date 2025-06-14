@@ -10,7 +10,8 @@
     "copyright": "© 2024 CryptoChecker. All rights reserved."
   },
   "common": {
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "noData": "No data available"
   },
   "auth": {
     "createAccount": "Create Account",
