@@ -3,9 +3,6 @@ import { db } from '../../firebase/firebase';
 import { setFavorites, toggleFavorite } from './favoritesSlice';
 import type { AppThunk, RootState } from '../store';
 
-
-
-
 export const loadFavorites =
   (uid: string): AppThunk =>
   async (dispatch) => {

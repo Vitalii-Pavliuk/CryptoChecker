@@ -1,10 +1,7 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import { useLazyGetCoinChartQuery } from '../../redux/services/coinGeckoApi';
-import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import './CryptoChart.css';
-import { Loader } from '../Loader/Loader';
+import type { CoinChart } from '../../types/coinTypes';
 import { useTranslation } from 'react-i18next';
 import i18n from '../../i18n';
 
@@ -16,25 +13,16 @@ const periods = {
   '1Y': 365,
 };
 
-const defaultDays = 7;
-
-const CryptoChart: React.FC = () => {
+const CryptoChart: React.FC<{
+  data: CoinChart | undefined;
+  onPeriodChange: (days: number) => void;
+  selectedPeriod: number;
+}> = ({ data, onPeriodChange, selectedPeriod }) => {
   const { t } = useTranslation();
 
-  const { id } = useParams<{ id: string }>();
-  const [selectedPeriod, setSelectedPeriod] = React.useState(defaultDays);
-
-  const [trigger, { data: coin, isLoading, isError, error }] = useLazyGetCoinChartQuery();
-
-  React.useEffect(() => {
-    if (id) {
-      trigger({ id, days: selectedPeriod });
-    }
-  }, [id, trigger, selectedPeriod]);
-
-  if (isLoading) return <Loader />;
-  if (isError) return <ErrorMessage error={error} />;
- if (!coin || !coin.prices) return <div className="no-data">{t('coin.noChart')}</div>;
+  if (!data || !data.prices) {
+    return <div className="no-data">{t('coin.noChart')}</div>;
+  }
 
   const formatTime = (timestamp: number) => {
     const date = new Date(timestamp);
@@ -51,7 +39,7 @@ const CryptoChart: React.FC = () => {
     return date.toLocaleDateString(i18n.language);
   };
 
-  const chartData = coin.prices.map(([timestamp, price]) => ({
+  const chartData = data.prices.map(([timestamp, price]) => ({
     time: formatTime(timestamp),
     price: price,
   }));
@@ -80,7 +68,7 @@ const CryptoChart: React.FC = () => {
         {Object.entries(periods).map(([label, days]) => (
           <button
             key={days}
-            onClick={() => setSelectedPeriod(days)}
+            onClick={() => onPeriodChange(days)}
             className={`chart-period-button ${selectedPeriod === days ? 'active' : ''}`}
           >
             {label}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import type { Coin } from '../../types/coinTypes';
 import CoinCard from '../CoinCard/CoinCard';
 import { toggleFavoriteAndSync } from '../../redux/coins/favoritesThunks';
@@ -7,7 +7,7 @@ import type { RootState } from '../../redux/store';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { Loader } from '../Loader/Loader';
 import { useTranslation } from 'react-i18next';
-import {useAppDispatch} from '../../hooks/hooks'
+import { useAppDispatch } from '../../hooks/hooks';
 
 interface TopCryptoListProps {
   coins: Coin[];

@@ -1,5 +1,4 @@
-
-import { BrowserRouter, Routes, Route, NavLink, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import RequireAuth from './RequireAuth';
 import { RegisterPage } from '../pages/RegisterPage';
 import { LoginPage } from '../pages/LoginPage';
@@ -15,11 +14,11 @@ import { setFavorites } from '../redux/coins/favoritesSlice';
 import { useTranslation } from 'react-i18next';
 import './App.css';
 import CryptoDetailsPage from '../pages/CryptoDetailsPage';
-import { useTheme } from './UI/ThemeContext';
+import Navbar from '../components/Navbar/Navbar';
+import Footer from '../components/Footer/Footer';
 
 export default function App() {
   const { t, i18n } = useTranslation();
-  const { theme, toggleTheme } = useTheme();
   const dispatch = useAppDispatch();
   const { user, isAuthenticated } = useAppSelector((state) => state.auth);
   const [authChecked, setAuthChecked] = useState(false);
@@ -54,54 +53,11 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <nav className="navbar">
-        <div className="nav-links">
-          {!isAuthenticated && (
-            <>
-              <NavLink to="/register" className="nav-link">
-                {t('navbar.register')}
-              </NavLink>
-              <NavLink to="/login" className="nav-link">
-                {t('navbar.login')}
-              </NavLink>
-            </>
-          )}
-          <NavLink to="/coins" className="nav-link">
-            {t('navbar.coins')}
-          </NavLink>
-          {isAuthenticated && (
-            <>
-              <NavLink to="/favorites" className="nav-link">
-                {t('navbar.favorites')}
-              </NavLink>
-              <div className="user-info">
-                <span>{user?.email}</span>
-                <button onClick={() => auth.signOut()} className="logout-button">
-                  {t('navbar.logout')}
-                </button>
-              </div>
-            </>
-          )}
-          <div className="language-switcher">
-            <button
-              onClick={() => changeLanguage('en')}
-              className={`lang-button ${i18n.language === 'en' ? 'active' : ''}`}
-            >
-              EN
-            </button>
-            <button
-              onClick={() => changeLanguage('uk')}
-              className={`lang-button ${i18n.language === 'uk' ? 'active' : ''}`}
-            >
-              UA
-            </button>
-          </div>
-            <button onClick={toggleTheme} className="theme-toggle">
-            {theme === 'light' ? 'Dark' : 'Light'}
-          </button>
-        </div>
-      </nav>
-
+      <Navbar
+        isAuthenticated={isAuthenticated}
+        userEmail={user?.email || null}
+        changeLanguage={changeLanguage}
+      />
       <div className="content-container">
         <Routes>
           <Route
@@ -146,9 +102,7 @@ export default function App() {
           />
         </Routes>
       </div>
-      <footer className="footer">
-        <span>{t('footer.copyright')}</span>
-      </footer>
+      <Footer />
     </BrowserRouter>
   );
 }

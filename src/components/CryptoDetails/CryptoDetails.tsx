@@ -1,33 +1,23 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { useGetCoinDetailsQuery } from '../../redux/services/coinGeckoApi';
-import { useDispatch, useSelector } from 'react-redux';
-import {useAppDispatch} from '../../hooks/hooks'
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../hooks/hooks';
 import { toggleFavoriteAndSync } from '../../redux/coins/favoritesThunks';
 import type { RootState } from '../../redux/store';
-import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
+import type { CoinDetails } from '../../types/coinTypes';
 import './CryptoDetails.css';
-import { Loader } from '../Loader/Loader';
 import { useTranslation } from 'react-i18next';
-import i18n from '../../i18n';
+import DOMPurify from 'dompurify';
 
-const CryptoDetails: React.FC = () => {
+const CryptoDetails: React.FC<{ coin: CoinDetails }> = ({ coin }) => {
   const { t, i18n } = useTranslation();
-  const { id } = useParams<{ id: string }>();
-  const { data: coin, isLoading, isError, error } = useGetCoinDetailsQuery(id ?? '', { skip: !id });
   const dispatch = useAppDispatch();
   const favoriteCoins = useSelector((state: RootState) => state.favorites.favoriteCoins);
+  const id = coin.id;
 
-  const isFavorite = id ? favoriteCoins.includes(id) : false;
+  const isFavorite = favoriteCoins.includes(id);
   const handleToggleFavorite = () => {
-    if (id) {
-      dispatch(toggleFavoriteAndSync(id));
-    }
+    dispatch(toggleFavoriteAndSync(id));
   };
-
-  if (isLoading) return <Loader />;
-  if (isError) return <ErrorMessage error={error} />;
-  if (!coin) return <div className="no-data">{t('coin.noData')}</div>;
   return (
     <div className="coin-details-page">
       <div className="coin-header">
@@ -47,29 +37,28 @@ const CryptoDetails: React.FC = () => {
       </div>
 
       <div className="coin-stats">
-        <div className="stat-card">
-          <h3>{t('coin.currentPrice')}</h3>
-          <p className="stat-value">
-            ${coin.market_data.current_price.usd.toLocaleString(i18n.language)}
-          </p>
-        </div>
-        <div className="stat-card">
-          <h3>{t('coin.marketCap')}</h3>
+        <div>
+          <div className="stat-card">
+            <h3>{t('coin.currentPrice')}</h3>
+            <p className="stat-value">
+              ${coin.market_data.current_price.usd.toLocaleString(i18n.language)}
+            </p>
+          </div>
           <p className="stat-value">
             ${coin.market_data.market_cap.usd.toLocaleString(i18n.language)}
           </p>
-        </div>
-        <div className="stat-card">
-          <h3>{t('coin.change24h')}</h3>
-          <p
-            className="stat-value"
-            style={{
-              color: coin.market_data.price_change_percentage_24h >= 0 ? 'green' : 'red',
-              fontWeight: 'bold',
-            }}
-          >
-            {coin.market_data.price_change_percentage_24h.toFixed(2)}%
-          </p>
+          <div className="stat-card">
+            <h3>{t('coin.change24h')}</h3>
+            <p
+              className="stat-value"
+              style={{
+                color: coin.market_data.price_change_percentage_24h >= 0 ? 'green' : 'red',
+                fontWeight: 'bold',
+              }}
+            >
+              {coin.market_data.price_change_percentage_24h.toFixed(2)}%
+            </p>
+          </div>
         </div>
       </div>
 
@@ -80,7 +69,7 @@ const CryptoDetails: React.FC = () => {
         <div
           className="description-content"
           dangerouslySetInnerHTML={{
-            __html: coin.description[i18n.language] || coin.description.en,
+            __html: DOMPurify.sanitize(coin.description[i18n.language] || coin.description.en),
           }}
         />
       </div>

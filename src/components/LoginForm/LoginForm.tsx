@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase/firebase';
-import { useDispatch } from 'react-redux';
-
 import { setUser } from '../../redux/User/authSlice';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { useTranslation } from 'react-i18next';
-import {useAppDispatch} from '../../hooks/hooks'
+import { useAppDispatch } from '../../hooks/hooks';
 import './LoginForm.css';
 
 const LoginForm: React.FC = () => {
