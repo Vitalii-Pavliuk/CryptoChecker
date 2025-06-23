@@ -36,8 +36,8 @@ const CryptoList: React.FC = () => {
   };
 
   return (
-    <div className="crypto-list">
-      <h1 className="list-header">
+    <div>
+      <h1>
         {searchQuery ? t('list.searchResults') : t('list.topCryptocurrencies')}
       </h1>
       <SearchBar onSearchQueryChange={setSearchQuery} />

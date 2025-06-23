@@ -1,0 +1,111 @@
+:root {
+  --light-color: #f8f9fa; 
+  --dark-color:  #212529;  
+  --secondary-color: #6c757d;
+  --border-color: #dee2e6;
+
+  --transition-base: 0.3s ease;
+  --transition-fast: 0.15s ease;
+  --transition-slow: 0.5s ease;
+
+  --color-bg-primary: var(--light-color);
+  --color-bg-secondary: #ffffff;
+  --color-bg-alt: #f8f9fa;
+  --color-text: var(--dark-color);
+  --color-text-secondary: var(--secondary-color);
+  --color-border: var(--border-color);
+  --color-shadow: rgba(0 0 0 / 0.10);
+  --color-card-bg: #ffffff;
+  --color-input-bg: #ffffff;
+  --color-input-border: var(--border-color);
+  --color-nav-bg: #ffffff;
+  --color-nav-text: var(--dark-color);
+  --color-primary: var(--dark-color);
+}
+
+[data-theme='dark'] {
+  --color-bg-primary: var(--dark-color);
+  --color-bg-secondary: color-mix(in srgb, var(--dark-color) 60%, #ffffff 40%);
+  --color-bg-alt:      color-mix(in srgb, var(--dark-color) 95%, #ffffff 5%);
+  --color-text:        var(--light-color);
+  --color-text-secondary: color-mix(in srgb, var(--secondary-color) 80%, #ffffff 20%);
+  --color-border:         color-mix(in srgb, var(--dark-color) 80%, #ffffff 20%);
+  --color-shadow: rgba(0 0 0 / 0.30);
+  --color-card-bg:   color-mix(in srgb, var(--dark-color) 90%, #ffffff 10%);
+  --color-input-bg:  color-mix(in srgb, var(--dark-color) 95%, #ffffff 5%);
+  --color-input-border: color-mix(in srgb, var(--dark-color) 80%, #ffffff 20%);
+  --color-nav-bg:    color-mix(in srgb, var(--dark-color) 95%, #ffffff 5%);
+  --color-nav-text:  var(--light-color);
+  --color-primary:   #ffffff;
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text);
+}
+
+body,
+.navbar,
+.nav-link,
+.user-info,
+.logout-button,
+.navbar-controls button,
+.coin-card,
+.coin-item,
+.favorite-button,
+.form-input,
+.search-input,
+.submit-button,
+.load-more-button,
+.chart-period-button,
+.stat-card,
+.coin-description,
+.footer,
+.top-crypto-list,
+.search-bar,
+.register-form,
+.login-form,
+.favorite-coin-item,
+.crypto-details,
+.crypto-chart,
+.chart-container,
+.chart-controls,
+.chart-period,
+.coin-stats,
+.coin-info,
+.coin-price,
+.coin-change,
+.coin-market-cap,
+.coin-volume,
+.coin-supply,
+.coin-rank,
+.coin-symbol,
+.coin-name,
+.coin-price-change,
+.coin-price-current,
+.coin-price-change-percent,
+.coin-price-change-amount,
+.coin-price-change-label,
+.coin-price-change-value,
+.coin-price-change-symbol,
+.coin-price-change-direction,
+.coin-price-change-icon,
+.coin-price-change-text,
+.coin-price-change-number,
+.coin-price-change-decimal,
+.coin-price-change-fraction,
+.coin-price-change-whole,
+.coin-price-change-cents,
+.coin-price-change-dollars,
+.coin-price-change-sign,
+.coin-price-change-arrow,
+.coin-price-change-indicator,
+.coin-price-change-badge,
+.coin-price-change-chip,
+.coin-price-change-tag {
+  transition:
+    background-color var(--transition-base),
+    color            var(--transition-base),
+    border-color     var(--transition-base),
+    box-shadow       var(--transition-base);
+}

@@ -1,4 +1,4 @@
-import './Loader.css';
+import './Loader.scss';
 
 export const Loader = () => (
   <div className="loader-container">

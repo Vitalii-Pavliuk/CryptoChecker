@@ -1,0 +1,19 @@
+
+.footer {
+  padding: $spacing-lg 0;
+  background-color: $dark-color;
+  color: white;
+
+  &__container {
+    @include flex-between;
+  }
+
+  &__copyright {
+    font-size: 0.875rem;
+  }
+
+  &__links {
+    @include flex-center;
+    gap: $spacing-md;
+  }
+} 

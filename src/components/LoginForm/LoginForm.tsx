@@ -6,7 +6,7 @@ import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from '../../hooks/hooks';
-import './LoginForm.css';
+import './LoginForm.scss';
 
 const LoginForm: React.FC = () => {
   const { t } = useTranslation();

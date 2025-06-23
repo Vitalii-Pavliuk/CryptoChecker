@@ -4,7 +4,7 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { toggleFavoriteAndSync } from '../../redux/coins/favoritesThunks';
 import type { RootState } from '../../redux/store';
 import type { CoinDetails } from '../../types/coinTypes';
-import './CryptoDetails.css';
+import './CryptoDetails.scss';
 import { useTranslation } from 'react-i18next';
 import DOMPurify from 'dompurify';
 
@@ -74,14 +74,14 @@ const CryptoDetails: React.FC<{ coin: CoinDetails }> = ({ coin }) => {
         />
       </div>
 
-      <div className="coin-links">
+      <div>
         <h2>{t('coin.officialLinks')}</h2>
         <ul>
           {coin.links.homepage
             .filter((link) => link)
             .map((link, index) => (
               <li key={index}>
-                <a href={link} target="_blank" rel="noopener noreferrer" className="link-button">
+                <a href={link} target="_blank" rel="noopener noreferrer">
                   {link}
                 </a>
               </li>

@@ -21,11 +21,11 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query }) => {
   });
 
   return (
-    <div className="search-results">
+    <div>
       {isLoading && <Loader />}
       {isError && <ErrorMessage error={error} />}
       {results.length > 0 ? (
-        <div className="coins-grid">
+        <>
           {results.map((coin) => (
             <CoinCard
               key={coin.id}
@@ -38,10 +38,10 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query }) => {
               showFavoriteButton={false}
             />
           ))}
-        </div>
+        </>
       ) : (
         !isLoading &&
-        query !== '' && <div className="no-results">{t('list.noResults', { query })}</div>
+        query !== '' && <div>{t('list.noResults', { query })}</div>
       )}
     </div>
   );

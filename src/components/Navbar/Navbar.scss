@@ -1,0 +1,89 @@
+.navbar {
+    background-color: var(--color-nav-bg);
+    padding: 30px 70px;
+    display: flex;
+justify-content: space-around;
+    align-items: center;
+}
+.nav-links{
+    display: flex;
+    gap:15px;
+}
+
+
+  .nav-link {
+    color: var(--color-nav-text);
+    padding: 0.5rem 1rem;
+
+    border-radius: 4px;
+            transition: background-color var(--transition-base), 
+                        color var(--transition-base), 
+                        border-color var(--transition-base),
+                        box-shadow var(--transition-base), 
+                        transform var(--transition-base);
+        
+
+    &:hover {
+      background-color: var( --color-nav-text);
+      color: var(--color-bg-primary); 
+    }
+
+    &.active {
+      background-color: var( --color-nav-text);
+      color: var(--color-bg-primary);
+    }
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--color-nav-text);
+  }
+
+  .logout-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color var(--transition-base), 
+                color var(--transition-base), 
+                border-color var(--transition-base),
+                box-shadow var(--transition-base), 
+                transform var(--transition-base);
+
+    &:hover {
+      background-color: #c82333;
+    }
+  }
+  .navbar-controls{
+    display: flex;
+    gap: 15px;
+}
+  .navbar-controls button{
+    background-color: transparent;
+    color: var(--color-nav-text);
+    border: 1px solid var(--color-nav-text);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color var(--transition-base), 
+                color var(--transition-base), 
+                border-color var(--transition-base),
+                box-shadow var(--transition-base), 
+                transform var(--transition-base);
+
+    &:hover {
+      background-color: var( --color-nav-text);
+      color: var(--color-bg-primary);   
+    }
+
+    &.active {
+      background-color: var( --color-nav-text);
+      color: var(--color-bg-primary); 
+    }
+  }
+
+

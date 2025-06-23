@@ -8,6 +8,7 @@ import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { Loader } from '../Loader/Loader';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from '../../hooks/hooks';
+import './TopCryptoList.scss';
 
 interface TopCryptoListProps {
   coins: Coin[];
@@ -34,29 +35,27 @@ const TopCryptoList: React.FC<TopCryptoListProps> = ({
   };
 
   return (
-    <div className="top-crypto-list">
+    <div>
       {isLoading && coins.length === 0 && <Loader />}
       {!!error && <ErrorMessage error={error} />}
       {coins.length > 0 && (
         <>
-          <div className="coins-grid">
-            {coins.map((coin) => (
-              <CoinCard
-                key={coin.id}
-                id={coin.id}
-                image={coin.image}
-                name={coin.name}
-                symbol={coin.symbol}
-                price={coin.current_price}
-                change24h={coin.price_change_percentage_24h}
-                rank={coin.market_cap_rank}
-                isFavorite={isFavorite(coin.id)}
-                onToggleFavorite={handleToggleFavorite}
-                showFavoriteButton={true}
-                to={`/coins/${coin.id}`}
-              />
-            ))}
-          </div>
+          {coins.map((coin) => (
+            <CoinCard
+              key={coin.id}
+              id={coin.id}
+              image={coin.image}
+              name={coin.name}
+              symbol={coin.symbol}
+              price={coin.current_price}
+              change24h={coin.price_change_percentage_24h}
+              rank={coin.market_cap_rank}
+              isFavorite={isFavorite(coin.id)}
+              onToggleFavorite={handleToggleFavorite}
+              showFavoriteButton={true}
+              to={`/coins/${coin.id}`}
+            />
+          ))}
           {hasMore && (
             <div className="load-more-container">
               <button onClick={onLoadMore} disabled={isLoading} className="load-more-button">

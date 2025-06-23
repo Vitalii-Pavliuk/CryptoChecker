@@ -1,0 +1,38 @@
+.crypto-chart {
+  background-color: var(--color-card-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px var(--color-shadow);
+  margin-bottom: 2rem;
+
+  .chart-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .chart-period-button {
+    background-color: var(--color-bg-alt);
+    color: var(--color-text);
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color var(--transition-base), 
+                color var(--transition-base), 
+                border-color var(--transition-base),
+                box-shadow var(--transition-base), 
+                transform var(--transition-base);
+
+    &:hover {
+      background-color: var(--color-bg-secondary);
+      border-color: var(--color-text);
+    }
+
+    &.active {
+      background-color: var(--color-bg-secondary);
+      border-color: var(--color-text);
+    }
+  }
+} 

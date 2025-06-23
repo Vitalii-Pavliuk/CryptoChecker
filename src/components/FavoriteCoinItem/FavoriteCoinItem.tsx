@@ -6,7 +6,7 @@ import { toggleFavoriteAndSync } from '../../redux/coins/favoritesThunks';
 import type { RootState } from '../../redux/store';
 import type { Coin } from '../../types/coinTypes';
 import { useTranslation } from 'react-i18next';
-import './FavoriteCoinItem.css';
+import './FavoriteCoinItem.scss';
 import i18n from '../../i18n';
 
 interface FavoriteCoinItemProps {

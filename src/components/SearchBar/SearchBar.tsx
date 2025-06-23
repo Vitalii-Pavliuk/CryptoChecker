@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import './SearchBar.css';
+import './SearchBar.scss';
 
 interface SearchBarProps {
   onSearchQueryChange: (query: string) => void;
@@ -23,17 +23,13 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearchQueryChange }) => {
   };
 
   return (
-    <div className="search-container">
-      <div className="search-form">
-        <input
-          type="text"
-          placeholder={t('search.placeholder')}
-          value={inputValue}
-          onChange={handleChange}
-          className="search-input"
-        />
-      </div>
-    </div>
+    <input
+      type="text"
+      placeholder={t('search.placeholder')}
+      value={inputValue}
+      onChange={handleChange}
+      className="search-input"
+    />
   );
 };
 

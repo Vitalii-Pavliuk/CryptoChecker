@@ -1,0 +1,65 @@
+.coin-item {
+margin-top: 20px;
+    background: var(--color-card-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    display: flex
+;
+    align-items: center;
+    gap: 1.5rem;
+  transition: transform var(--transition-base), 
+              box-shadow var(--transition-base),
+              background-color var(--transition-base),
+              color var(--transition-base),
+              border-color var(--transition-base);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex: 1;
+  }
+
+  img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--color-text);
+  }
+
+  p {
+    margin: 0.5rem 0 0;
+    color: var(--color-text-secondary);
+  }
+}
+
+.favorite-button {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  color: #ffd700;
+  transition: transform var(--transition-base),
+              background-color var(--transition-base),
+              color var(--transition-base),
+              border-color var(--transition-base),
+              box-shadow var(--transition-base);
+
+  &:hover {
+    transform: scale(1.1);
+  }
+} 

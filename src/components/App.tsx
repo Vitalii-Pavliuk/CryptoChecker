@@ -12,7 +12,6 @@ import { setUser, clearUser } from '../redux/User/authSlice';
 import { loadFavorites } from '../redux/coins/favoritesThunks';
 import { setFavorites } from '../redux/coins/favoritesSlice';
 import { useTranslation } from 'react-i18next';
-import './App.css';
 import CryptoDetailsPage from '../pages/CryptoDetailsPage';
 import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Footer/Footer';
