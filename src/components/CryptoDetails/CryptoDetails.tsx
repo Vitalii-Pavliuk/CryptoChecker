@@ -44,9 +44,12 @@ const CryptoDetails: React.FC<{ coin: CoinDetails }> = ({ coin }) => {
               ${coin.market_data.current_price.usd.toLocaleString(i18n.language)}
             </p>
           </div>
+          <div className="stat-card">
+            <h3>{t('coin.marketCap')}</h3>
           <p className="stat-value">
             ${coin.market_data.market_cap.usd.toLocaleString(i18n.language)}
           </p>
+          </div>
           <div className="stat-card">
             <h3>{t('coin.change24h')}</h3>
             <p
